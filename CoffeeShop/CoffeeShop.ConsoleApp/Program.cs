@@ -1,6 +1,7 @@
 ﻿using CoffeeShop.Core.Abstract;
 using CoffeeShop.Core;
 using CoffeeShop.Infrastructure.Data;
+using CoffeeShop.Core.Enums;
 
 var address = new Address
 {
@@ -13,7 +14,7 @@ var address = new Address
 var orders = new List<Order>
 {
     new Order { Id = 1,
-    OrderStatus = CoffeeShop.Enums.OrderStatusEnum.DELIVERED
+    OrderStatus = OrderStatusEnum.DELIVERED
     }
 };
 

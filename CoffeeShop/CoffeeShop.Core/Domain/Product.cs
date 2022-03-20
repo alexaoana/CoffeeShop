@@ -1,4 +1,4 @@
-﻿using CoffeeShop.Enums;
+﻿using CoffeeShop.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

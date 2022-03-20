@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CoffeeShop.Core\CoffeeShop.Core.csproj" />
-    <ProjectReference Include="..\CoffeeShop.Domain\CoffeeShop.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,5 +10,7 @@ namespace CoffeeShop.Core.Abstract
     public interface IUnitOfWork
     {
         IUserRepository UserRepository { get; set; }
+        IProductRepository ProductRepository { get; set; }
+        IOrderRepository OrderRepository { get; set; }
     }
 }

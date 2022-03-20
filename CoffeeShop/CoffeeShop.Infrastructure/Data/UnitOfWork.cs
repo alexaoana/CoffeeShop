@@ -13,6 +13,10 @@ namespace CoffeeShop.Infrastructure.Data
     {
         private AppDBContext _appDBContext;
         private IUserRepository _userRepository;
+        private IOrderRepository _orderRepository;
+        private IProductOrderRepository _productOrderRepository;
+        private IProductRepository _productRepository;
+
         public UnitOfWork(AppDBContext appDBContext)
         {
             _appDBContext = appDBContext;
@@ -33,6 +37,50 @@ namespace CoffeeShop.Infrastructure.Data
             }
         }
 
-
+        public IProductRepository ProductRepository 
+        { 
+            get
+            {
+                if (_productRepository == null)
+                {
+                    _productRepository = new ProductRepository(_appDBContext);
+                }
+                return _productRepository;
+            }
+            set
+            {
+                _productRepository = value;
+            } 
+        }
+        public IOrderRepository OrderRepository
+        {
+            get
+            {
+                if (_orderRepository == null)
+                {
+                    _orderRepository = new OrderRepository(_appDBContext);
+                }
+                return _orderRepository;
+            }
+            set
+            {
+                _orderRepository = value;
+            }
+        }
+        public IProductOrderRepository ProductOrderRepository
+        {
+            get
+            {
+                if (_productOrderRepository == null)
+                {
+                    _productOrderRepository= new ProductOrderRepository(_appDBContext);
+                }
+                return _productOrderRepository;
+            }
+            set
+            {
+                _productOrderRepository = value;
+            }
+        }
     }
 }

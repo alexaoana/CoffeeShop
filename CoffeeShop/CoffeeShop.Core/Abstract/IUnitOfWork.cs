@@ -12,5 +12,6 @@ namespace CoffeeShop.Core.Abstract
         IUserRepository UserRepository { get; set; }
         IProductRepository ProductRepository { get; set; }
         IOrderRepository OrderRepository { get; set; }
+        IProductOrderRepository ProductOrderRepository { get; set; }
     }
 }

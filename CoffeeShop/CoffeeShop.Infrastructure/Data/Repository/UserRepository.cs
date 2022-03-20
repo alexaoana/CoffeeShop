@@ -10,20 +10,39 @@ namespace CoffeeShop.Infrastructure.Data.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private readonly AppDBContext _dbContext;
-        public UserRepository(AppDBContext dbContext)
+        private readonly AppDBContext _appDBContext;
+        public UserRepository(AppDBContext appDBContext)
         {
-            _dbContext = dbContext;
+            _appDBContext = appDBContext;
         }
 
-        public void AddUser(User user)
+        public User GetUser(int id)
         {
-            _dbContext.Users.Add(user);
+            foreach (var user in _appDBContext.Users)
+                if (user.Id == id)
+                    return user;
+            return null;
         }
 
         public IEnumerable<User> GetUsers()
         {
-            return _dbContext.Users;
+            return _appDBContext.Users;
+        }
+
+        public void AddUser(User user)
+        {
+            _appDBContext.Users.Add(user);
+        }
+
+        public void RemoveUser(int id)
+        {
+            _appDBContext.Users.Remove(GetUser(id));
+        }
+
+        public void UpdateUser(User user)
+        {
+            RemoveUser(user.Id);
+            AddUser(user);
         }
     }
 }

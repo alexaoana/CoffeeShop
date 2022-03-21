@@ -39,13 +39,8 @@ namespace CoffeeShop.Infrastructure.Data.Repository
 
         public void UpdateOrder(Order order)
         {
-            foreach (var item in _appDBContext.Orders)
-                if (item.Id == order.Id)
-                {
-                    item.ProductOrders = order.ProductOrders;
-                    item.OrderStatus = order.OrderStatus;
-                    item.User = order.User;
-                }
+            var item = GetOrder(order.Id);
+            item = order;
         }
     }
 }

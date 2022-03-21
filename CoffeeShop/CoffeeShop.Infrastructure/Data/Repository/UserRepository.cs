@@ -38,16 +38,8 @@ namespace CoffeeShop.Infrastructure.Data.Repository
 
         public void UpdateUser(User user)
         {
-            foreach (var item in _appDBContext.Users)
-                if (item.Id == user.Id)
-                {
-                    item.Orders = user.Orders;
-                    item.Address = user.Address;
-                    item.AddressId = user.AddressId;
-                    item.Email = user.Email;
-                    item.FirstName = user.FirstName;
-                    item.LastName = user.LastName;
-                }
+            var item = GetUser(user.Id);
+            item = user;
         }
     }
 }

@@ -38,17 +38,8 @@ namespace CoffeeShop.Infrastructure.Data.Repository
 
         public void UpdateProduct(Product product)
         {
-            foreach (var item in _appDBContext.Products)
-                if (item.Id == product.Id)
-                {
-                    item.ProductOrders = product.ProductOrders;
-                    item.ProductUnitEnum = product.ProductUnitEnum;
-                    item.AvailableQuantity = product.AvailableQuantity;
-                    item.Amount = product.Amount;
-                    item.Image = product.Image;
-                    item.Description = product.Description;
-                    item.Name = product.Name;
-                }
+            var item = GetProduct(product.Id);
+            item = product;
         }
     }
 }

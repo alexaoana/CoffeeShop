@@ -34,32 +34,26 @@ namespace CoffeeShop.Infrastructure.Services
             {
                 PublicAccess = BlobContainerPublicAccessType.Blob
             }; 
+
             await cloudBlobContainer.SetPermissionsAsync(permissions); 
             string path = GetBlobPath(fileName); 
             CloudBlockBlob blob = cloudBlobContainer.GetBlockBlobReference(path);
+
             if (blob != null)
             {
                 using (var stream = openStream())
-                    await blob.UploadFromStreamAsync(stream); 
+                await blob.UploadFromStreamAsync(stream); 
                 uri = blob.StorageUri.PrimaryUri.ToString();
             }
             return uri;
-
-
         }
 
         private async Task<CloudBlobContainer> GetBlobContainerAsync()
         {
             CloudBlobContainer cloudBlobContainer = _cloudBlobClient.GetContainerReference(_containerName);
-
-
-
             await cloudBlobContainer.CreateIfNotExistsAsync();
-
             return cloudBlobContainer;
         }
-
-
 
         private static string GetBlobPath(string fileName)
         {

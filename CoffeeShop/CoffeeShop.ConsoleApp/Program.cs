@@ -2,6 +2,23 @@
 using CoffeeShop.Core;
 using CoffeeShop.Infrastructure.Data;
 using CoffeeShop.Core.Enums;
+using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Http;
+using CoffeeShop.Infrastructure.Services;
+using CoffeeShop.Core.Abstract.Services;
+
+string containerName = "images";
+string connectionString = "";
+var image = await OpenReadAsync("image.jpg");
+Task<Stream> OpenReadAsync(string path)
+{
+    return Task.FromResult((Stream)File.OpenRead(path));
+}
+var fileName = "phone";
+IFormFile formFile = new FormFile(image, 0, image.Length, "form", fileName);
+
+IImageService imageService = new AzureBlobImageService(connectionString, containerName);
+var test = await imageService.UploadFormFileAsync(formFile);
 
 var address = new Address
 {

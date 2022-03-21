@@ -1,4 +1,5 @@
-﻿using CoffeeShop.Core.Enums;
+﻿using CoffeeShop.Core.Domain;
+using CoffeeShop.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace CoffeeShop.Core
         public ProductUnitEnum ProductUnitEnum { get; set; }
         public int AvailableQuantity { get; set; }
         public List<ProductOrder> ProductOrders { get; set; }
+        public Image Image { get; set; }
     }
 }

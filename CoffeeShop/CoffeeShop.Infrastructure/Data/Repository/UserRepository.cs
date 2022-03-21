@@ -18,10 +18,7 @@ namespace CoffeeShop.Infrastructure.Data.Repository
 
         public User GetUser(int id)
         {
-            foreach (var user in _appDBContext.Users)
-                if (user.Id == id)
-                    return user;
-            return null;
+            return _appDBContext.Users.SingleOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<User> GetUsers()
@@ -41,8 +38,16 @@ namespace CoffeeShop.Infrastructure.Data.Repository
 
         public void UpdateUser(User user)
         {
-            RemoveUser(user.Id);
-            AddUser(user);
+            foreach (var item in _appDBContext.Users)
+                if (item.Id == user.Id)
+                {
+                    item.Orders = user.Orders;
+                    item.Address = user.Address;
+                    item.AddressId = user.AddressId;
+                    item.Email = user.Email;
+                    item.FirstName = user.FirstName;
+                    item.LastName = user.LastName;
+                }
         }
     }
 }

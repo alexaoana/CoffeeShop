@@ -18,10 +18,7 @@ namespace CoffeeShop.Infrastructure.Data.Repository
 
         public Product GetProduct(int id)
         {
-           foreach (Product product in _appDBContext.Products)
-                if (product.Id == id)
-                    return product;
-           return null;
+           return _appDBContext.Products.SingleOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<Product> GetProducts()
@@ -41,8 +38,17 @@ namespace CoffeeShop.Infrastructure.Data.Repository
 
         public void UpdateProduct(Product product)
         {
-            RemoveProduct(product.Id);
-            AddProduct(product);
+            foreach (var item in _appDBContext.Products)
+                if (item.Id == product.Id)
+                {
+                    item.ProductOrders = product.ProductOrders;
+                    item.ProductUnitEnum = product.ProductUnitEnum;
+                    item.AvailableQuantity = product.AvailableQuantity;
+                    item.Amount = product.Amount;
+                    item.Image = product.Image;
+                    item.Description = product.Description;
+                    item.Name = product.Name;
+                }
         }
     }
 }

@@ -19,10 +19,7 @@ namespace CoffeeShop.Infrastructure.Data.Repository
 
         public Order GetOrder(int id)
         {
-            foreach (var order in _appDBContext.Orders)
-                if (order.Id == id)
-                    return order;
-            return null;
+            return _appDBContext.Orders.SingleOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<Order> GetOrders()
@@ -42,8 +39,13 @@ namespace CoffeeShop.Infrastructure.Data.Repository
 
         public void UpdateOrder(Order order)
         {
-            RemoveOrder(order.Id);
-            AddOrder(order);
+            foreach (var item in _appDBContext.Orders)
+                if (item.Id == order.Id)
+                {
+                    item.ProductOrders = order.ProductOrders;
+                    item.OrderStatus = order.OrderStatus;
+                    item.User = order.User;
+                }
         }
     }
 }

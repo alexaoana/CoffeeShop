@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CoffeeShop.Core.Enums
+﻿namespace CoffeeShop.Core.Enums
 {
-    public enum ProductUnitEnum
+    public enum ProductUnit
     {
-        KG,
+        Kg,
         G,
-        ML
+        Ml
     }
 }

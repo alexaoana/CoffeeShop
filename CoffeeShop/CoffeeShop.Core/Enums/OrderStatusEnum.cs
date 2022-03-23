@@ -1,9 +1,9 @@
 ﻿namespace CoffeeShop.Core.Enums
 {
-    public enum OrderStatusEnum
+    public enum OrderStatus
     {
-        CANCELED,
-        INPROGRESS,
-        DELIVERED
+        Canceled,
+        InProgress,
+        Delivered
     }
 }

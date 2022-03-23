@@ -1,9 +1,4 @@
 ﻿using CoffeeShop.Core.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoffeeShop.Core
 {
@@ -11,7 +6,7 @@ namespace CoffeeShop.Core
     {
         public int Id { get; set; }
         public User User { get; set; }
-        public OrderStatusEnum OrderStatus { get; set; }
+        public OrderStatus OrderStatus { get; set; }
         public List<ProductOrder> ProductOrders { get; set; }
     }
 }

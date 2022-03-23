@@ -1,11 +1,6 @@
 ﻿using CoffeeShop.Core.Abstract;
 using CoffeeShop.Core.Abstract.Repository;
 using CoffeeShop.Infrastructure.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoffeeShop.Infrastructure.Data
 {

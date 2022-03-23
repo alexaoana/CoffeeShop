@@ -9,16 +9,16 @@ using CoffeeShop.Core.Abstract.Services;
 
 string containerName = "images";
 string connectionString = "";
-var image = await OpenReadAsync("image.jpg");
+//var image = await OpenReadAsync("image.jpg");
 Task<Stream> OpenReadAsync(string path)
 {
     return Task.FromResult((Stream)File.OpenRead(path));
 }
 var fileName = "phone";
-IFormFile formFile = new FormFile(image, 0, image.Length, "form", fileName);
+//IFormFile formFile = new FormFile(image, 0, image.Length, "form", fileName);
 
-IImageService imageService = new AzureBlobImageService(connectionString, containerName);
-var test = await imageService.UploadFormFileAsync(formFile);
+//IImageService imageService = new AzureBlobImageService(connectionString, containerName);
+//var test = await imageService.UploadFormFileAsync(formFile);
 
 var address = new Address
 {
@@ -31,7 +31,7 @@ var address = new Address
 var orders = new List<Order>
 {
     new Order { Id = 1,
-    OrderStatus = OrderStatusEnum.DELIVERED
+    OrderStatus = OrderStatus.Delivered
     }
 };
 

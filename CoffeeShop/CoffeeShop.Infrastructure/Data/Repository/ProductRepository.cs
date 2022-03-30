@@ -1,5 +1,6 @@
 ﻿using CoffeeShop.Core;
 using CoffeeShop.Core.Abstract.Repository;
+using CoffeeShop.Core.Abstract.Repository.Paginate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,13 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         public IEnumerable<Product> GetProducts()
         {
             return _appDBContext.Products;
+        }
+
+        public IEnumerable<Product> GetProducts(Filter filter)
+        {
+            return _appDBContext.Products
+                .Skip((filter.PageNumber - 1) * filter.PageSize)
+                .Take(filter.PageSize);
         }
 
         public void AddProduct(Product product)

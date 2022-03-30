@@ -1,5 +1,6 @@
 ﻿using CoffeeShop.Core;
 using CoffeeShop.Core.Abstract.Repository;
+using CoffeeShop.Core.Abstract.Repository.Paginate;
 
 namespace CoffeeShop.Infrastructure.Data.Repository
 {
@@ -20,6 +21,13 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         public IEnumerable<ProductOrder> GetProductOrders()
         {
             return _appDBContext.ProductOrders;
+        }
+
+        public IEnumerable<ProductOrder> GetProductOrders(Filter filter)
+        {
+            return _appDBContext.ProductOrders
+                .Skip((filter.PageNumber - 1) * filter.PageSize)
+                .Take(filter.PageSize);
         }
 
         public void AddProductOrder(ProductOrder productOrder)

@@ -1,5 +1,6 @@
 ﻿using CoffeeShop.Core;
 using CoffeeShop.Core.Abstract.Repository;
+using CoffeeShop.Core.Abstract.Repository.Paginate;
 
 namespace CoffeeShop.Infrastructure.Data.Repository
 {
@@ -19,6 +20,13 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         public IEnumerable<User> GetUsers()
         {
             return _appDBContext.Users;
+        }
+
+        public IEnumerable<User> GetUsers(Filter filter)
+        {
+            return _appDBContext.Users
+                .Skip((filter.PageNumber - 1) * filter.PageSize)
+                .Take(filter.PageSize);
         }
 
         public void AddUser(User user)

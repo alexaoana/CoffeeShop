@@ -1,6 +1,6 @@
 ﻿using CoffeeShop.Core;
 using CoffeeShop.Core.Abstract.Repository;
-using CoffeeShop.Core.Abstract.Repository.Paginate;
+using CoffeeShop.Core.Paginate;
 using System;
 using System.Collections.Generic;
 using System.Linq;

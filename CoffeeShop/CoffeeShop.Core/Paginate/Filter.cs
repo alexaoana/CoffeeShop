@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoffeeShop.Core.Abstract.Repository.Paginate
+namespace CoffeeShop.Core.Paginate
 {
     public class Filter
     {

@@ -1,13 +1,12 @@
-﻿namespace CoffeeShop.Core
+﻿using MediatR;
+
+namespace CoffeeShop.Core.Commands.Users
 {
-    public class User
+    public class CreateUserCommand : IRequest<bool>
     {
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Email { get; set; }
-        public int AddressId { get; set; }  
         public Address Address { get; set; }
-        public List<Order>? Orders { get; set; }
     }
 }

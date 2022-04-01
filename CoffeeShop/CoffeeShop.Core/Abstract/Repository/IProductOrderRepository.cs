@@ -1,4 +1,4 @@
-﻿using CoffeeShop.Core.Abstract.Repository.Paginate;
+﻿using CoffeeShop.Core.Paginate;
 
 namespace CoffeeShop.Core.Abstract.Repository
 {

@@ -11,8 +11,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.15" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="QueryHandlers\Orders\" />
-  </ItemGroup>
-
 </Project>

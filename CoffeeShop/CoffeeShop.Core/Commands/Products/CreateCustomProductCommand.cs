@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace CoffeeShop.Core.Commands.Products
 {
-    internal class CreateCustomProductCommand
+    public class CreateCustomProductCommand : IRequest<bool>
     {
+        public Product Product { get; set; }
+        public List<string> Ingredients { get; set; }
     }
 }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CoffeeShop.Core.Paginate;
+using MediatR;
 
 namespace CoffeeShop.Core.Queries.Products
 {
-    internal class GetProductsQuery
+    public class GetProductsQuery : IRequest<IEnumerable<Product>>
     {
+        public Filter Filter { get; set; }
     }
 }

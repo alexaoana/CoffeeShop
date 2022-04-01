@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace CoffeeShop.Core.Queries.Orders
 {
-    internal class GetOrderByIdQuery
+    public class GetOrderByIdQuery : IRequest<Order>
     {
+        public int OrderId { get; set; }
     }
 }

@@ -19,11 +19,7 @@ namespace CoffeeShop.Core.CommandHandlers.Orders
                 Order = request.Order,
                 Quantity = request.Quantity
             };
-            request.Order.ProductOrders.Add(productOrder);
-            request.Product.ProductOrders.Add(productOrder);
             _unitOfWork.ProductOrderRepository.AddProductOrder(productOrder);
-            _unitOfWork.OrderRepository.UpdateOrder(request.Order);
-            _unitOfWork.ProductRepository.UpdateProduct(request.Product);
             return true;
         }
     }

@@ -1,12 +1,35 @@
 ﻿using CoffeeShop.Core;
+using CoffeeShop.Core.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShop.Infrastructure.Data
 {
-    public class AppDBContext
+    public class AppDBContext : DbContext
     {
-        public IList<User> Users = new List<User>();
-        public IList<Product> Products = new List<Product>();
-        public IList<Order> Orders = new List<Order>();
-        public IList<ProductOrder> ProductOrders = new List<ProductOrder>();
+        public AppDBContext()
+        {
+
+        }
+        public AppDBContext(DbContextOptions<AppDBContext> dbContextOptions) : base(dbContextOptions)
+        {
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
+        {
+            dbContextOptionsBuilder.UseSqlServer(@"Server=ROMOB41210\SQLEXPRESS;Database=CoffeeShop;Trusted_Connection=True;MultipleActiveResultSets = True");
+        }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<ProductOrder> ProductOrders { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Image> Images { get; set; }
     }
 }

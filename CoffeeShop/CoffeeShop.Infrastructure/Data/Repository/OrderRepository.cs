@@ -33,17 +33,23 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         public void AddOrder(Order order)
         {
             _appDBContext.Orders.Add(order);
+            _appDBContext.SaveChanges();
         }
 
         public void RemoveOrder(int id)
         {
             _appDBContext.Orders.Remove(GetOrder(id));
+            _appDBContext.SaveChanges();
         }
 
         public void UpdateOrder(Order order)
         {
-            var item = GetOrder(order.Id);
-            item = order;
+            foreach (var item in _appDBContext.Orders)
+                if (item.Id == order.Id)
+                {
+                    item.OrderStatus = order.OrderStatus;
+                }
+            _appDBContext.SaveChanges();
         }
     }
 }

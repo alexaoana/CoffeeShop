@@ -32,17 +32,27 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         public void AddUser(User user)
         {
             _appDBContext.Users.Add(user);
+            _appDBContext.SaveChanges();
         }
 
         public void RemoveUser(int id)
         {
             _appDBContext.Users.Remove(GetUser(id));
+            _appDBContext.SaveChanges();
         }
 
         public void UpdateUser(User user)
         {
-            var item = GetUser(user.Id);
-            item = user;
+            foreach (var item in _appDBContext.Users)
+                if (item.Id == user.Id)
+                {
+                    item.FirstName = user.FirstName;
+                    item.LastName = user.LastName;
+                    item.Email = user.Email;
+                    item.Password = user.Password;
+                    item.Orders = user.Orders;
+                }
+            _appDBContext.SaveChanges();
         }
     }
 }

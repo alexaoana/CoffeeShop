@@ -77,5 +77,10 @@ namespace CoffeeShop.Infrastructure.Data
                 _productOrderRepository = value;
             }
         }
+
+        public void SaveChanges()
+        {
+            _appDBContext.SaveChanges();
+        }
     }
 }

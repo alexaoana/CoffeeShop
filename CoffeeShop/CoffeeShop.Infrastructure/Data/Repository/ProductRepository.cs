@@ -14,7 +14,7 @@ namespace CoffeeShop.Infrastructure.Data.Repository
 
         public Product GetProduct(int id)
         {
-           return _appDBContext.Products.SingleOrDefault(o => o.Id == id);
+            return _appDBContext.Products.SingleOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<Product> GetProducts()
@@ -32,17 +32,28 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         public void AddProduct(Product product)
         {
             _appDBContext.Products.Add(product);
+            _appDBContext.SaveChanges();
         }
 
         public void RemoveProduct(int id)
         {
             _appDBContext.Products.Remove(GetProduct(id));
+            _appDBContext.SaveChanges();
         }
 
         public void UpdateProduct(Product product)
         {
-            var item = GetProduct(product.Id);
-            item = product;
+            foreach (var item in _appDBContext.Products)
+                if (item.Id == product.Id)
+                {
+                    item.ProductUnit = product.ProductUnit;
+                    item.Price = product.Price;
+                    item.Amount = product.Amount;
+                    item.Description = product.Description;
+                    item.CoffeeIntensity = product.CoffeeIntensity;
+                    item.Name = product.Name;
+                }
+            _appDBContext.SaveChanges();
         }
     }
 }

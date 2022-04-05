@@ -12,6 +12,7 @@ using CoffeeShop.Core.Queries.Users;
 using CoffeeShop.Core.QueryHandlers.Users;
 using CoffeeShop.Core.Patterns.Strategy;
 using CoffeeShop.Core.Patterns.Decorator;
+using CoffeeShop.Infrastructure.Data.Repository;
 
 /**
 string containerName = "images";
@@ -68,7 +69,7 @@ userHandler.Handle(userCommand, new System.Threading.CancellationToken()).Wait()
 var usersQuery = new GetUsersQuery();
 var usersQueryHandler = new GetUsersQueryHandler(unitOfWork);
 var users = await usersQueryHandler.Handle(usersQuery, new System.Threading.CancellationToken());
-**/
+
 
 var context = new Context(new PayByCard("1234", "123", DateOnly.MaxValue));
 context.executePayment(12);
@@ -84,5 +85,30 @@ Product product = new Product
 };
 
 var decorated = new CoffeeWithCaffeine(new CoffeeWithSugar(new CoffeeWithCoconutMilk(new CoffeeWithCream(new CoffeeWithAlmondMilk(new CoffeeWithMilk(new CoffeeWithIce(product).GetProduct()).GetProduct()).GetProduct()).GetProduct()).GetProduct()).GetProduct()).GetProduct();
-Console.WriteLine(decorated.Description);
+Console.WriteLine(decorated.Description);**/
 
+var address = new Address
+{
+    City = "Arad",
+    Number = "15",
+    Street = "Bulevardul Revolutiei"
+};
+
+var user = new User
+{
+    FirstName = "Oana",
+    LastName = "Alexa",
+    Email = "oana.alexa@a.com",
+    Password = "oanaalexa",
+    Address = address
+};
+
+var order = new Order
+{
+    User = user,
+    OrderStatus = OrderStatus.Placed
+};
+
+var appDBContext = new AppDBContext();
+var orderRepository = new OrderRepository(appDBContext);
+orderRepository.AddOrder(order);

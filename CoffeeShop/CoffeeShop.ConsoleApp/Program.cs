@@ -13,6 +13,10 @@ using CoffeeShop.Core.QueryHandlers.Users;
 using CoffeeShop.Core.Patterns.Strategy;
 using CoffeeShop.Core.Patterns.Decorator;
 using CoffeeShop.Infrastructure.Data.Repository;
+using CoffeeShop.Core.Queries.Orders;
+using CoffeeShop.Core.QueryHandlers.Orders;
+using AutoMapper;
+using CoffeeShop.Core.AutoMapperProfiles;
 
 /**
 string containerName = "images";
@@ -85,7 +89,7 @@ Product product = new Product
 };
 
 var decorated = new CoffeeWithCaffeine(new CoffeeWithSugar(new CoffeeWithCoconutMilk(new CoffeeWithCream(new CoffeeWithAlmondMilk(new CoffeeWithMilk(new CoffeeWithIce(product).GetProduct()).GetProduct()).GetProduct()).GetProduct()).GetProduct()).GetProduct()).GetProduct();
-Console.WriteLine(decorated.Description);**/
+Console.WriteLine(decorated.Description);
 
 var address = new Address
 {
@@ -111,4 +115,27 @@ var order = new Order
 
 var appDBContext = new AppDBContext();
 var orderRepository = new OrderRepository(appDBContext);
-orderRepository.AddOrder(order);
+orderRepository.AddOrder(order);**/
+
+Product product = new Product
+{
+    Description = "Expresso",
+    Amount = 20,
+    Price = 5,
+    Name = "Expresso"
+};
+
+Order order = new Order
+{
+    Id = 1
+};
+
+ProductOrder productOrder = new ProductOrder
+{
+    Product = product,
+    Order = order
+};
+
+order.ProductOrders = new List<ProductOrder> { productOrder };
+var query = new GetOrderByIdQuery();
+query.OrderId = 1;

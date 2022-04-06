@@ -1,19 +1,24 @@
-﻿using CoffeeShop.Core.Abstract;
+﻿using AutoMapper;
+using CoffeeShop.Core.Abstract;
+using CoffeeShop.Core.DTOs;
 using CoffeeShop.Core.Queries.Orders;
 using MediatR;
 
 namespace CoffeeShop.Core.QueryHandlers.Orders
 {
-    public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order>
+    public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderDTO>
     {
         private IUnitOfWork _unitOfWork;
-        public GetOrderByIdQueryHandler(IUnitOfWork unitOfWork)
+        private IMapper _mapper;
+        public GetOrderByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
-        public async Task<Order> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
+        public async Task<OrderDTO> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
         {
-            return _unitOfWork.OrderRepository.GetOrder(request.OrderId);
+            var order = _unitOfWork.OrderRepository.GetOrder(request.OrderId);
+            return _mapper.Map<Order, OrderDTO>(order);
         }
     }
 }

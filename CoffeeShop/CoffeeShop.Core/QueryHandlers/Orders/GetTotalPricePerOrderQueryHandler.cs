@@ -1,4 +1,5 @@
-﻿using CoffeeShop.Core.Queries.Orders;
+﻿using AutoMapper;
+using CoffeeShop.Core.Queries.Orders;
 using MediatR;
 
 namespace CoffeeShop.Core.QueryHandlers.Orders

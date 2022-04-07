@@ -17,6 +17,9 @@ using CoffeeShop.Core.Queries.Orders;
 using CoffeeShop.Core.QueryHandlers.Orders;
 using AutoMapper;
 using CoffeeShop.Core.AutoMapperProfiles;
+using CoffeeShop.Core.Domain;
+using CoffeeShop.ConsoleApp;
+using CoffeeShop.Core.Paginate;
 
 /**
 string containerName = "images";
@@ -58,7 +61,7 @@ var user = new User
     Orders = orders
 };
 
-var appDBContext = new AppDBContext();
+var appDBContext = new AppDbContext();
 IUnitOfWork unitOfWork = new UnitOfWork(appDBContext);
 var userCommand = new CreateUserCommand()
 {
@@ -111,31 +114,26 @@ var order = new Order
 {
     User = user,
     OrderStatus = OrderStatus.Placed
-};
+};**/
 
-var appDBContext = new AppDBContext();
-var orderRepository = new OrderRepository(appDBContext);
-orderRepository.AddOrder(order);**/
+var task11 = new Task11();
 
-Product product = new Product
+
+
+//task11.populateDatabase();
+var ordersOfUser = await task11.GetOrdersOfUser(new User { Id = 2 });
+//var ordersByStatus = await task11.GetOrdersByStatus();
+//var mostExpensiveOrder = await task11.GetMostExpensiveOrder();
+//var top3MostBoughtProducts = await task11.Top3MostBoughtProducts();
+//var pricesDictionary = await task11.GetAveragePriceForProductCategories();
+var emptyOrders = await task11.GetAllEmptyOrders();
+var mostExpensivePrice = task11.GetMostExpensivePrice();
+var order = task11.GetOrderById(3);
+var usersFromPage = await task11.GetUsersFromPage(new Filter
 {
-    Description = "Expresso",
-    Amount = 20,
-    Price = 5,
-    Name = "Expresso"
-};
+    PageNumber = 1,
+    PageSize = 2,
+});
+var orderwithMostProducts = await task11.GetOrdeWithMostProducts();
 
-Order order = new Order
-{
-    Id = 1
-};
-
-ProductOrder productOrder = new ProductOrder
-{
-    Product = product,
-    Order = order
-};
-
-order.ProductOrders = new List<ProductOrder> { productOrder };
-var query = new GetOrderByIdQuery();
-query.OrderId = 1;
+Console.ReadLine();

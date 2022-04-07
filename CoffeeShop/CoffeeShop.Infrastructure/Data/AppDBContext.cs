@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShop.Infrastructure.Data
 {
-    public class AppDBContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public AppDBContext()
+        public AppDbContext()
         {
 
         }
-        public AppDBContext(DbContextOptions<AppDBContext> dbContextOptions) : base(dbContextOptions)
+        public AppDbContext(DbContextOptions<AppDbContext> dbContextOptions) : base(dbContextOptions)
         {
 
         }

@@ -6,6 +6,7 @@
         public string City { get; set; }
         public string Street { get; set; }
         public string Number { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; } 
     }
 }

@@ -1,52 +1,56 @@
 ﻿using CoffeeShop.Core;
 using CoffeeShop.Core.Abstract.Repository;
 using CoffeeShop.Core.Paginate;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShop.Infrastructure.Data.Repository
 {
     public class ProductOrderRepository : IProductOrderRepository
     {
-        private AppDBContext _appDBContext;
+        private AppDbContext _appDbContext;
 
-        public ProductOrderRepository(AppDBContext appDBContext)
+        public ProductOrderRepository(AppDbContext appDBContext)
         {
-            _appDBContext = appDBContext;
+            _appDbContext = appDBContext;
         }
 
         public ProductOrder GetProductOrder(int id)
         {
-            return _appDBContext.ProductOrders.SingleOrDefault(o => o.Id == id);
+            return _appDbContext.ProductOrders
+                .Include(x => x.Product)
+                .SingleOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<ProductOrder> GetProductOrders()
         {
-            return _appDBContext.ProductOrders;
+            return _appDbContext.ProductOrders.Include(x => x.Product);
         }
 
         public IEnumerable<ProductOrder> GetProductOrders(Filter filter)
         {
-            return _appDBContext.ProductOrders
+            return _appDbContext.ProductOrders
+                .Include(x => x.Product)
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize);
         }
 
         public void AddProductOrder(ProductOrder productOrder)
         {
-            _appDBContext.ProductOrders.Add(productOrder);
-            _appDBContext.SaveChanges();
+            _appDbContext.ProductOrders.Add(productOrder);
+            _appDbContext.SaveChanges();
         }
 
         public void RemoveProductOrder(int id)
         {
-            _appDBContext.ProductOrders.Remove(GetProductOrder(id));
-            _appDBContext.SaveChanges();
+            _appDbContext.ProductOrders.Remove(GetProductOrder(id));
+            _appDbContext.SaveChanges();
         }
 
         public void UpdateProductOrder(ProductOrder productOrder)
         {
             var item = GetProductOrder(productOrder.Id);
             item = productOrder;
-            _appDBContext.SaveChanges();
+            _appDbContext.SaveChanges();
         }
     }
 }

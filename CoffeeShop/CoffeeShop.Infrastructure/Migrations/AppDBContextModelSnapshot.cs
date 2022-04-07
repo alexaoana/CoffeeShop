@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoffeeShop.Infrastructure.Migrations
 {
-    [DbContext(typeof(AppDBContext))]
+    [DbContext(typeof(AppDbContext))]
     partial class AppDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -41,7 +41,13 @@ namespace CoffeeShop.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
@@ -157,9 +163,6 @@ namespace CoffeeShop.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -178,10 +181,18 @@ namespace CoffeeShop.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId")
-                        .IsUnique();
-
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("CoffeeShop.Core.Address", b =>
+                {
+                    b.HasOne("CoffeeShop.Core.User", "User")
+                        .WithOne("Address")
+                        .HasForeignKey("CoffeeShop.Core.Address", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CoffeeShop.Core.Domain.Image", b =>
@@ -225,23 +236,6 @@ namespace CoffeeShop.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("CoffeeShop.Core.User", b =>
-                {
-                    b.HasOne("CoffeeShop.Core.Address", "Address")
-                        .WithOne("User")
-                        .HasForeignKey("CoffeeShop.Core.User", "AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("CoffeeShop.Core.Address", b =>
-                {
-                    b.Navigation("User")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("CoffeeShop.Core.Order", b =>
                 {
                     b.Navigation("ProductOrders");
@@ -257,6 +251,9 @@ namespace CoffeeShop.Infrastructure.Migrations
 
             modelBuilder.Entity("CoffeeShop.Core.User", b =>
                 {
+                    b.Navigation("Address")
+                        .IsRequired();
+
                     b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618

@@ -6,15 +6,15 @@ namespace CoffeeShop.Infrastructure.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private AppDBContext _appDBContext;
+        private AppDbContext _appDbContext;
         private IUserRepository _userRepository;
         private IOrderRepository _orderRepository;
         private IProductOrderRepository _productOrderRepository;
         private IProductRepository _productRepository;
 
-        public UnitOfWork(AppDBContext appDBContext)
+        public UnitOfWork(AppDbContext appDBContext)
         {
-            _appDBContext = appDBContext;
+            _appDbContext = appDBContext;
         }
         public IUserRepository UserRepository
         {
@@ -22,7 +22,7 @@ namespace CoffeeShop.Infrastructure.Data
             {
                 if (_userRepository == null)
                 {
-                    _userRepository = new UserRepository(_appDBContext);
+                    _userRepository = new UserRepository(_appDbContext);
                 }
                 return _userRepository;
             }
@@ -38,7 +38,7 @@ namespace CoffeeShop.Infrastructure.Data
             {
                 if (_productRepository == null)
                 {
-                    _productRepository = new ProductRepository(_appDBContext);
+                    _productRepository = new ProductRepository(_appDbContext);
                 }
                 return _productRepository;
             }
@@ -53,7 +53,7 @@ namespace CoffeeShop.Infrastructure.Data
             {
                 if (_orderRepository == null)
                 {
-                    _orderRepository = new OrderRepository(_appDBContext);
+                    _orderRepository = new OrderRepository(_appDbContext);
                 }
                 return _orderRepository;
             }
@@ -68,7 +68,7 @@ namespace CoffeeShop.Infrastructure.Data
             {
                 if (_productOrderRepository == null)
                 {
-                    _productOrderRepository= new ProductOrderRepository(_appDBContext);
+                    _productOrderRepository= new ProductOrderRepository(_appDbContext);
                 }
                 return _productOrderRepository;
             }
@@ -80,7 +80,7 @@ namespace CoffeeShop.Infrastructure.Data
 
         public void SaveChanges()
         {
-            _appDBContext.SaveChanges();
+            _appDbContext.SaveChanges();
         }
     }
 }

@@ -1,55 +1,57 @@
 ﻿using CoffeeShop.Core;
 using CoffeeShop.Core.Abstract.Repository;
 using CoffeeShop.Core.Paginate;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShop.Infrastructure.Data.Repository
 {
     public class OrderRepository : IOrderRepository
     {
-        private AppDBContext _appDBContext;
+        private AppDbContext _appDbContext;
 
-        public OrderRepository(AppDBContext appDBContext)
+        public OrderRepository(AppDbContext appDBContext)
         {
-            _appDBContext = appDBContext;
+            _appDbContext = appDBContext;
         }
 
         public Order GetOrder(int id)
         {
-            return _appDBContext.Orders.SingleOrDefault(o => o.Id == id);
+            return _appDbContext.Orders
+                .Include(x => x.ProductOrders)
+                .SingleOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<Order> GetOrders()
         {
-            return _appDBContext.Orders;
+            return _appDbContext.Orders;
         }
 
         public IEnumerable<Order> GetOrders(Filter filter)
         {
-            return _appDBContext.Orders
+            return _appDbContext.Orders
+                .Include(x => x.ProductOrders)
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize);
         }
 
         public void AddOrder(Order order)
         {
-            _appDBContext.Orders.Add(order);
-            _appDBContext.SaveChanges();
+            _appDbContext.Orders.Add(order);
+            _appDbContext.SaveChanges();
         }
 
         public void RemoveOrder(int id)
         {
-            _appDBContext.Orders.Remove(GetOrder(id));
-            _appDBContext.SaveChanges();
+            _appDbContext.Orders.Remove(GetOrder(id));
+            _appDbContext.SaveChanges();
         }
 
         public void UpdateOrder(Order order)
         {
-            foreach (var item in _appDBContext.Orders)
+            foreach (var item in _appDbContext.Orders)
                 if (item.Id == order.Id)
-                {
                     item.OrderStatus = order.OrderStatus;
-                }
-            _appDBContext.SaveChanges();
+            _appDbContext.SaveChanges();
         }
     }
 }

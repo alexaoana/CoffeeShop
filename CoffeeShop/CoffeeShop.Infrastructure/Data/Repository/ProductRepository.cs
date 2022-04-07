@@ -1,49 +1,53 @@
 ﻿using CoffeeShop.Core;
 using CoffeeShop.Core.Abstract.Repository;
 using CoffeeShop.Core.Paginate;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShop.Infrastructure.Data.Repository
 {
     public class ProductRepository : IProductRepository
     {
-        private AppDBContext _appDBContext;
-        public ProductRepository(AppDBContext appDBContext)
+        private AppDbContext _appDbContext;
+        public ProductRepository(AppDbContext appDBContext)
         {
-            _appDBContext = appDBContext;
+            _appDbContext = appDBContext;
         }
 
         public Product GetProduct(int id)
         {
-            return _appDBContext.Products.SingleOrDefault(o => o.Id == id);
+            return _appDbContext.Products
+                .Include(x => x.ProductOrders)
+                .SingleOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<Product> GetProducts()
         {
-            return _appDBContext.Products;
+            return _appDbContext.Products.Include(x => x.ProductOrders);
         }
 
         public IEnumerable<Product> GetProducts(Filter filter)
         {
-            return _appDBContext.Products
+            return _appDbContext.Products
+                .Include(x => x.ProductOrders)
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize);
         }
 
         public void AddProduct(Product product)
         {
-            _appDBContext.Products.Add(product);
-            _appDBContext.SaveChanges();
+            _appDbContext.Products.Add(product);
+            _appDbContext.SaveChanges();
         }
 
         public void RemoveProduct(int id)
         {
-            _appDBContext.Products.Remove(GetProduct(id));
-            _appDBContext.SaveChanges();
+            _appDbContext.Products.Remove(GetProduct(id));
+            _appDbContext.SaveChanges();
         }
 
         public void UpdateProduct(Product product)
         {
-            foreach (var item in _appDBContext.Products)
+            foreach (var item in _appDbContext.Products)
                 if (item.Id == product.Id)
                 {
                     item.ProductUnit = product.ProductUnit;
@@ -53,7 +57,7 @@ namespace CoffeeShop.Infrastructure.Data.Repository
                     item.CoffeeIntensity = product.CoffeeIntensity;
                     item.Name = product.Name;
                 }
-            _appDBContext.SaveChanges();
+            _appDbContext.SaveChanges();
         }
     }
 }

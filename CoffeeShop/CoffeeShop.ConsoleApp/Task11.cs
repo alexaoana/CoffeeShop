@@ -27,37 +27,16 @@ namespace CoffeeShop.ConsoleApp
         {
             for (int i = 0; i < 10; i++)
             {
-                var address = new Address
-                {
-                    City = "Timisoara" + i,
-                    Street = "Mihai Eminescu" + i,
-                    Number = "1A" + i,
-                };
-                var user = new User
-                {
-                    FirstName = "Oana" + i,
-                    LastName = "Alexa" + i,
-                    Email = "email@gmail.com",
-                    Password = "oana" + i,
-                    Address = address
-                };
-                var image = new Image
-                {
-                    AzurePath = "blank" + i
-                };
-                var product = new Product
-                {
-                    Amount = i,
-                    CoffeeIntensity = i,
-                    Description = "blank",
-                    Name = "Espresso",
-                    Price = i,
-                    Image = image
-                };
-                var order = new Order
-                {
-                    User = user
-                };
+                var address = new Address("Timisoara" + i, "Mihai Eminescu" + i, "1A" + i);
+                var user = new User("Oana" + i, "Alexa" + i, "email@gmail.com", "oana" + i);
+                var image = new Image("azurePath" + i);
+                var product = new Product("Espresoo" + i, "blank" + i, 10 * i / 3, i % 3 + 10, ProductUnit.Ml, image, i % 3);
+                address.User = user;
+                user.Address = address;
+                image.Product = product;
+                product.Image = image;
+                var order = new Order();
+                order.User = user;
                 if (i % 3 == 0)
                 {
                     product.ProductUnit = ProductUnit.Kg;
@@ -73,12 +52,9 @@ namespace CoffeeShop.ConsoleApp
                     product.ProductUnit = ProductUnit.G;
                     order.OrderStatus = OrderStatus.Delivered;
                 }
-                var productOrder = new ProductOrder
-                {
-                    Product = product,
-                    Order = order,
-                    Quantity = i % 3 + 1
-                };
+                var productOrder = new ProductOrder(i % 3 + 1);
+                productOrder.Product = product;
+                productOrder.Order = order;
                 _userRepository.AddUser(user);
                 _orderRepository.AddOrder(order);
                 _productRepository.AddProduct(product);
@@ -97,12 +73,6 @@ namespace CoffeeShop.ConsoleApp
         {
             return _appDbContext.Orders
                 .Where(x => x.User == user)
-                .Select(x => new Order
-                {
-                    Id = x.Id,
-                    ProductOrders = x.ProductOrders,
-                    OrderStatus = x.OrderStatus
-                })
                 .ToListAsync();
         }
 

@@ -1,4 +1,5 @@
 ﻿using CoffeeShop.Core.Commands.Products;
+using CoffeeShop.Core.Enums;
 using CoffeeShop.Core.Patterns.Decorator;
 using MediatR;
 
@@ -12,28 +13,28 @@ namespace CoffeeShop.Core.CommandHandlers.Products
             foreach (var ingredient in request.Ingredients)
                 switch (ingredient)
                 {
-                    case "milk":
+                    case Ingredient.Milk:
                         product = new CoffeeWithMilk(product).GetProduct();
                         break;
-                    case "almond milk":
+                    case Ingredient.AlmondMilk:
                         product = new CoffeeWithAlmondMilk(product).GetProduct();
                         break;
-                    case "coconut milk":
+                    case Ingredient.CoconutMilk:
                         product = new CoffeeWithCoconutMilk(product).GetProduct();
                         break;
-                    case "caffeine":
+                    case Ingredient.Caffeine:
                         product = new CoffeeWithCaffeine(product).GetProduct();
                         break;
-                    case "no caffeine":
+                    case Ingredient.NoCaffeine:
                         product = new CoffeeWithoutCaffeine(product).GetProduct();
                         break;
-                    case "sugar":
+                    case Ingredient.Sugar:
                         product = new CoffeeWithSugar(product).GetProduct();
                         break;
-                    case "cream":
+                    case Ingredient.Cream:
                         product = new CoffeeWithCream(product).GetProduct();
                         break;
-                    case "ice":
+                    case Ingredient.Ice:
                         product = new CoffeeWithIce(product).GetProduct();
                         break;
                 }

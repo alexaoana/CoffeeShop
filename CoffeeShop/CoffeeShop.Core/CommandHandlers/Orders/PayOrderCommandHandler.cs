@@ -14,10 +14,7 @@ namespace CoffeeShop.Core.CommandHandlers.Orders
         }
         public async Task<bool> Handle(PayOrderCommand request, CancellationToken cancellationToken)
         {
-            decimal price = 0;
-            foreach (var productOrder in request.Order.ProductOrders)
-                price += productOrder.Product.Price;
-            request.Payment.Pay(price);
+            request.Payment.Pay(request.Order.Price);
             request.Order.OrderStatus = OrderStatus.Placed;
             _unitOfWork.OrderRepository.UpdateOrder(request.Order);
             return true;

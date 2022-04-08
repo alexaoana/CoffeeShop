@@ -14,13 +14,9 @@ namespace CoffeeShop.Core.CommandHandlers.Users
 
         public async Task<bool> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var user = new User
-            {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Address = request.Address,
-                Email = request.Email,
-            };
+            var user = new User(request.FirstName, request.LastName,
+                request.Email, request.Password);
+            user.Address = request.Address;
             _unitOfWork.UserRepository.AddUser(user);
             return true;
         }

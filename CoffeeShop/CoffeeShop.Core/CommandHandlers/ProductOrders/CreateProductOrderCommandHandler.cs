@@ -13,12 +13,9 @@ namespace CoffeeShop.Core.CommandHandlers.ProductOrders
         }
         public async Task<bool> Handle(CreateProductOrderCommand request, CancellationToken cancellationToken)
         {
-            var productOrder = new ProductOrder
-            {
-                Product = request.Product,
-                Order = request.Order,
-                Quantity = request.Quantity
-            };
+            var productOrder = new ProductOrder(request.Quantity);
+            productOrder.Product = request.Product;
+            productOrder.Order = request.Order;
             _unitOfWork.ProductOrderRepository.AddProductOrder(productOrder);
             return true;
         }

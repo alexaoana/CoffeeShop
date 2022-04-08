@@ -14,11 +14,8 @@ namespace CoffeeShop.Core.CommandHandlers.Orders
         }
         public async Task<bool> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            var order = new Order
-            {
-                User = request.User,
-                OrderStatus = OrderStatus.InProgress
-            };
+            var order = new Order();
+            order.User = request.User;
             _unitOfWork.OrderRepository.AddOrder(order);
             return true;
         }

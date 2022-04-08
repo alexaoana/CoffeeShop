@@ -13,17 +13,8 @@ namespace CoffeeShop.Core.CommandHandlers.Products
         }
         public async Task<bool> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
-            var product = new Product()
-            {
-                Description = request.Description,
-                Name = request.Name,
-                Image = request.Image,
-                Price = request.Price,
-                CoffeeIntensity = request.CoffeeIntensity,
-                Amount = request.Amount,
-                ProductUnit = request.ProductUnit
-            };
-            _unitOfWork.ProductRepository.AddProduct(product);
+            _unitOfWork.ProductRepository.AddProduct(new Product(request.Name, request.Description, 
+                request.Amount, request.Price, request.ProductUnit, request.Image, request.CoffeeIntensity));
             return true;
         }
     }

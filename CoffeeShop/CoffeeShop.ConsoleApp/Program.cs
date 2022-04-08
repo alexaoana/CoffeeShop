@@ -121,7 +121,7 @@ var task11 = new Task11();
 
 
 //task11.populateDatabase();
-var ordersOfUser = await task11.GetOrdersOfUser(new User { Id = 2 });
+//var ordersOfUser = await task11.GetOrdersOfUser(new User { Id = 2 });
 //var ordersByStatus = await task11.GetOrdersByStatus();
 //var mostExpensiveOrder = await task11.GetMostExpensiveOrder();
 //var top3MostBoughtProducts = await task11.Top3MostBoughtProducts();

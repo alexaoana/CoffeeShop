@@ -18,8 +18,8 @@ namespace CoffeeShop.Core.QueryHandlers.Products
 
         public async Task<IEnumerable<ProductDTO>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            var products = _unitOfWork.ProductRepository.GetProducts(request.Filter);
-            return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(products);
+            return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(_unitOfWork.ProductRepository
+                .GetProducts(request.Filter));
         }
     }
 }

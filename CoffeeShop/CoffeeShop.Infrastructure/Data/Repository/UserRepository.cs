@@ -55,6 +55,7 @@ namespace CoffeeShop.Infrastructure.Data.Repository
                     item.Email = user.Email;
                     item.Password = user.Password;
                     item.Orders = user.Orders;
+                    item.Discount = user.Discount;
                 }
             _appDbContext.SaveChanges();
         }

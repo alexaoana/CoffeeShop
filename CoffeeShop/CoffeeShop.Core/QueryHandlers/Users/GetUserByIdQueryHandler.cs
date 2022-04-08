@@ -17,8 +17,8 @@ namespace CoffeeShop.Core.QueryHandlers.Users
         }
         public async Task<UserDTO> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var user = _unitOfWork.UserRepository.GetUser(request.UserId);
-            return _mapper.Map<User, UserDTO>(user);
+            return _mapper.Map<User, UserDTO>(_unitOfWork.UserRepository
+                .GetUser(request.UserId));
         }
     }
 }

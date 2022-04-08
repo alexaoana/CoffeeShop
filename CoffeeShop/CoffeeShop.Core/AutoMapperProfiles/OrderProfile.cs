@@ -17,11 +17,11 @@ namespace CoffeeShop.Core.AutoMapperProfiles
         {
             var totalPricePerOrderQuery = new GetTotalPricePerOrderQuery
             {
-                Order = order
+                OrderId = order.Id
             };
-            var totalPricePerOrderQueryHandler = new GetTotalPricePerOrderQueryHandler();
-            decimal totalPrice = await totalPricePerOrderQueryHandler.Handle(totalPricePerOrderQuery, new CancellationToken());
-            return totalPrice;
+            //var totalPricePerOrderQueryHandler = new GetTotalPricePerOrderQueryHandler(new UnitOfWork(new AppDbContext());
+            //decimal totalPrice = await totalPricePerOrderQueryHandler.Handle(totalPricePerOrderQuery, new CancellationToken());
+            return 0;
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace CoffeeShop.Core.Queries.Orders
 {
-    public class GetTotalPricePerOrderQuery : IRequest<decimal>
+    public class GetNumberOfProductsInOrderQuery : IRequest<int>
     {
         public int OrderId { get; set; }
     }

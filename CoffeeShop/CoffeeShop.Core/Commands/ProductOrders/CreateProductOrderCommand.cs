@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CoffeeShop.Core.Commands.Orders
+namespace CoffeeShop.Core.Commands.ProductOrders
 {
     public class CreateProductOrderCommand : IRequest<bool>
     {

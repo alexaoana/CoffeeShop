@@ -5,6 +5,6 @@ namespace CoffeeShop.Core.Queries.Orders
 {
     public class GetOrdersOfUserQuery : IRequest<IEnumerable<OrderDTO>>
     {
-        public User User { get; set; }
+        public int UserId { get; set; }
     }
 }

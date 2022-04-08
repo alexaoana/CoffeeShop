@@ -1,8 +1,8 @@
 ﻿using CoffeeShop.Core.Abstract;
-using CoffeeShop.Core.Commands.Orders;
+using CoffeeShop.Core.Commands.ProductOrders;
 using MediatR;
 
-namespace CoffeeShop.Core.CommandHandlers.Orders
+namespace CoffeeShop.Core.CommandHandlers.ProductOrders
 {
     public class CreateProductOrderCommandHandler : IRequestHandler<CreateProductOrderCommand, bool>
     {

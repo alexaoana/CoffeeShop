@@ -17,8 +17,9 @@ namespace CoffeeShop.Core.QueryHandlers.Orders
         }
         public async Task<IEnumerable<OrderDTO>> Handle(GetOrdersOfUserQuery request, CancellationToken cancellationToken)
         {
-            var orders = _unitOfWork.OrderRepository.GetOrders().Where(x => x.User == request.User);
-            return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDTO>>(orders);
+            return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDTO>>(_unitOfWork.OrderRepository
+                .GetOrders()
+                .Where(x => x.UserId == request.UserId));
         }
     }
 }

@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CoffeeShop.Core.Paginate;
 
 namespace CoffeeShop.Core.Abstract.Repository
 {
-    internal interface IAddressRepository
+    public interface IAddressRepository
     {
+        Address GetAddress(int id);
+        IEnumerable<Address> GetAddresses();
+        IEnumerable<Address> GetAddresses(Filter filter);
+        void AddAddress(Address address);
+        void RemoveAddress(int id);
+        void UpdateAddress(Address address);
     }
 }

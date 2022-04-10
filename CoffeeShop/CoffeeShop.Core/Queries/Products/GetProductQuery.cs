@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CoffeeShop.Core.DTOs;
+using MediatR;
 
 namespace CoffeeShop.Core.Queries.Products
 {
-    internal class GetProductQuery
+    public class GetProductQuery : IRequest<ProductDTO>
     {
+        public int Id { get; set; }
     }
 }

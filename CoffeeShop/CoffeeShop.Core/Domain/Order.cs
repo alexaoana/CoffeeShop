@@ -1,12 +1,15 @@
 ﻿using CoffeeShop.Core.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace CoffeeShop.Core
 {
     public class Order
     {
+        [Required]
         public int Id { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        [Required]
         public OrderStatus OrderStatus { get; set; }
         public decimal Price
         {

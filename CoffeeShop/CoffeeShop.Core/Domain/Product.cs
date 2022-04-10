@@ -1,13 +1,20 @@
 ﻿using CoffeeShop.Core.Domain;
 using CoffeeShop.Core.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace CoffeeShop.Core
 {
     public class Product
     {
+        [Required]
         public int Id { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string Name { get; set; }
+        [Required]
+        [MaxLength(200)]
         public string Description { get; set; }
+        [Required]
         public int Amount
         {
             get
@@ -20,6 +27,7 @@ namespace CoffeeShop.Core
                     Amount = value;
             }
         }
+        [Required]
         public decimal Price { 
             get
             {
@@ -31,10 +39,23 @@ namespace CoffeeShop.Core
                     Price = value;
             }
         }
+        [Required]
         public ProductUnit ProductUnit { get; set; }
         public List<ProductOrder>? ProductOrders { get; set; }
         public Image Image { get; set; }
-        public int CoffeeIntensity { get; set; }
+        [Required]
+        public int CoffeeIntensity
+        {
+            get
+            {
+                return CoffeeIntensity;
+            }
+            set
+            {
+                if (value > 0)
+                    CoffeeIntensity = value;
+            }
+        }
         public Product(int id, string name, string description, int amount, decimal price, ProductUnit productUnit, Image image, int coffeeIntensity)
         {
             Id = id;

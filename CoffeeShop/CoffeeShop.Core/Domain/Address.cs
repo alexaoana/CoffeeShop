@@ -1,10 +1,19 @@
-﻿namespace CoffeeShop.Core
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CoffeeShop.Core
 {
     public class Address
     {
+        [Required]
         public int Id { get; set; }
+        [Required]
+        [MaxLength(20)]
         public string City { get; set; }
+        [Required]
+        [MaxLength(100)]
         public string Street { get; set; }
+        [Required]
+        [MaxLength(4)]
         public string Number { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }

@@ -7,6 +7,7 @@ namespace CoffeeShop.Infrastructure.Data
     public class UnitOfWork : IUnitOfWork
     {
         private AppDbContext _appDbContext;
+        private IAddressRepository _addressRepository;
         private IUserRepository _userRepository;
         private IOrderRepository _orderRepository;
         private IProductOrderRepository _productOrderRepository;
@@ -16,14 +17,27 @@ namespace CoffeeShop.Infrastructure.Data
         {
             _appDbContext = appDBContext;
         }
+
+        public IAddressRepository AddressRepository
+        {
+            get
+            {
+                if (_addressRepository == null)
+                    _addressRepository = new AddressRepository(_appDbContext);
+                return _addressRepository;
+            }
+            set
+            {
+                _addressRepository = value;
+            }
+        }
+
         public IUserRepository UserRepository
         {
             get
             {
                 if (_userRepository == null)
-                {
                     _userRepository = new UserRepository(_appDbContext);
-                }
                 return _userRepository;
             }
             set
@@ -37,9 +51,7 @@ namespace CoffeeShop.Infrastructure.Data
             get
             {
                 if (_productRepository == null)
-                {
                     _productRepository = new ProductRepository(_appDbContext);
-                }
                 return _productRepository;
             }
             set
@@ -52,9 +64,7 @@ namespace CoffeeShop.Infrastructure.Data
             get
             {
                 if (_orderRepository == null)
-                {
                     _orderRepository = new OrderRepository(_appDbContext);
-                }
                 return _orderRepository;
             }
             set
@@ -67,9 +77,7 @@ namespace CoffeeShop.Infrastructure.Data
             get
             {
                 if (_productOrderRepository == null)
-                {
                     _productOrderRepository= new ProductOrderRepository(_appDbContext);
-                }
                 return _productOrderRepository;
             }
             set

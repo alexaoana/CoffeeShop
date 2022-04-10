@@ -98,11 +98,7 @@ namespace CoffeeShop.ConsoleApp
                 .Select(x => new OrderDTO
                 {
                     Order = x,
-                    Price = _appDbContext.ProductOrders
-                        .Include(x => x.Product)
-                        .Include(x => x.Order)
-                        .Where(y => y.Order == x)
-                        .Aggregate(decimal.Zero, (sum, y) => sum + y.Quantity * y.Product.Price)
+                    Price = x.Price
                 })
                 .OrderByDescending(x => x.Price)
                 .FirstAsync();

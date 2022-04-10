@@ -15,8 +15,11 @@ namespace CoffeeShop.Core.CommandHandlers.Users
         {
             var user = _unitOfWork.UserRepository.GetUser(request.UserId);
             var numberOfProducts = _unitOfWork.OrderRepository.GetOrder(request.OrderId).NumberOfProducts;
-            user.Discount += numberOfProducts * decimal.Parse("0.001");
-            _unitOfWork.UserRepository.UpdateUser(user);
+             if (user.Discount < 1)
+             {
+                user.Discount += numberOfProducts * decimal.Parse("0.001");
+                _unitOfWork.UserRepository.UpdateUser(user);
+             }    
             return true;
         }
     }

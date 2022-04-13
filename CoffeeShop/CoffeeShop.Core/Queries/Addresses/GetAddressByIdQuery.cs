@@ -3,8 +3,8 @@ using MediatR;
 
 namespace CoffeeShop.Core.Queries.Addresses
 {
-    public class GetAddressByIdQuery : IRequest<Address>
+    public class GetAddressByIdQuery : IRequest<AddressDTO>
     {
-        public int Id { get; set; }
+        public int AddressId { get; set; }
     }
 }

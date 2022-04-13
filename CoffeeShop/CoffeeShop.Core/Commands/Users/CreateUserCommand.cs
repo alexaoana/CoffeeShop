@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using CoffeeShop.Core.DTOs;
+using MediatR;
 
 namespace CoffeeShop.Core.Commands.Users
 {
-    public class CreateUserCommand : IRequest<bool>
+    public class CreateUserCommand : IRequest<UserDTO>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

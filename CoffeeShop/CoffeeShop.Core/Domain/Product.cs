@@ -17,46 +17,21 @@ namespace CoffeeShop.Core
         [Required]
         public int Amount
         {
-            get
-            {
-                return Amount;
-            }
-            set
-            {
-                if (value > 0)
-                    Amount = value;
-            }
+            get;
+            set;
         }
         [Required]
-        public decimal Price { 
-            get
-            {
-                return Price;
-            }
-            set
-            {
-                if (value > 0)
-                    Price = value;
-            }
+        public double Price {
+            get;
+            set;
         }
         [Required]
         public ProductUnit ProductUnit { get; set; }
         public List<ProductOrder>? ProductOrders { get; set; }
         public Image Image { get; set; }
         [Required]
-        public int CoffeeIntensity
-        {
-            get
-            {
-                return CoffeeIntensity;
-            }
-            set
-            {
-                if (value > 0)
-                    CoffeeIntensity = value;
-            }
-        }
-        public Product(int id, string name, string description, int amount, decimal price, ProductUnit productUnit, Image image, int coffeeIntensity)
+        public int CoffeeIntensity { get; set; }
+        public Product(int id, string name, string description, int amount, double price, ProductUnit productUnit, Image image, int coffeeIntensity)
         {
             Id = id;
             Name = name;
@@ -68,7 +43,7 @@ namespace CoffeeShop.Core
             CoffeeIntensity = coffeeIntensity;
             ProductOrders = new List<ProductOrder>();
         }
-        public Product(string name, string description, int amount, decimal price, ProductUnit productUnit, Image image, int coffeeIntensity)
+        public Product(string name, string description, int amount, double price, ProductUnit productUnit, Image image, int coffeeIntensity)
         {
             Name = name;
             Description = description;
@@ -79,7 +54,18 @@ namespace CoffeeShop.Core
             CoffeeIntensity = coffeeIntensity;
             ProductOrders = new List<ProductOrder>();
         }
-        public Product(string name, int amount, decimal price, ProductUnit productUnit, Image image, int coffeeIntensity)
+        public Product(string name, string description, int amount, double price, ProductUnit productUnit, int coffeeIntensity)
+        {
+            Name = name;
+            Description = description;
+            Amount = amount;
+            Price = price;
+            ProductUnit = productUnit;
+            Image = null;
+            CoffeeIntensity = coffeeIntensity;
+            ProductOrders = new List<ProductOrder>();
+        }
+        public Product(string name, int amount, double price, ProductUnit productUnit, Image image, int coffeeIntensity)
         {
             Name = name;
             Amount = amount;

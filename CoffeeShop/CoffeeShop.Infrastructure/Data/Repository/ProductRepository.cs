@@ -16,7 +16,6 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         public Product GetProduct(int id)
         {
             return _appDbContext.Products
-                .Include(x => x.ProductOrders)
                 .SingleOrDefault(o => o.Id == id);
         }
 
@@ -28,7 +27,6 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         public IEnumerable<Product> GetProducts(Filter filter)
         {
             return _appDbContext.Products
-                .Include(x => x.ProductOrders)
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize);
         }

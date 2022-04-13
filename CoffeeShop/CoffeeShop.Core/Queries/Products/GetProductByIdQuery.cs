@@ -3,8 +3,8 @@ using MediatR;
 
 namespace CoffeeShop.Core.Queries.Products
 {
-    public class GetProductQuery : IRequest<ProductDTO>
+    public class GetProductByIdQuery : IRequest<ProductDTO>
     {
-        public int Id { get; set; }
+        public int ProductId { get; set; }
     }
 }

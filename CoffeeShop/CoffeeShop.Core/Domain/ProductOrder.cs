@@ -11,17 +11,10 @@ namespace CoffeeShop.Core
         public int OrderId { get; set; }
         public Order Order { get; set; }
         [Required]
-        public int Quantity
+        public int Quantity { get; set; }
+        public ProductOrder()
         {
-            get
-            {
-                return Quantity;
-            }
-            set
-            {
-                if (value > 0)
-                    Quantity = value;
-            }
+
         }
         public ProductOrder(int id, int quantity)
         {

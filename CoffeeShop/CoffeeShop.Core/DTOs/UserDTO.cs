@@ -1,4 +1,6 @@
-﻿namespace CoffeeShop.Core.DTOs
+﻿using CoffeeShop.Core;
+
+namespace CoffeeShop.Core.DTOs
 {
     public class UserDTO
     {

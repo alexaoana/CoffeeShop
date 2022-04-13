@@ -2,6 +2,6 @@
 {
     public interface Payment
     {
-        void Pay(decimal price);
+        void Pay(double price);
     }
 }

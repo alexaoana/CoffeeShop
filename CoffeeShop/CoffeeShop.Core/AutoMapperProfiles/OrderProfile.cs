@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CoffeeShop.Core;
 using CoffeeShop.Core.DTOs;
 
 namespace CoffeeShop.Core.AutoMapperProfiles
@@ -8,6 +9,7 @@ namespace CoffeeShop.Core.AutoMapperProfiles
         public OrderProfile()
         {
             CreateMap<Order, OrderDTO>();
+            CreateMap<OrderDTO, Order>();
         }
     }
 }

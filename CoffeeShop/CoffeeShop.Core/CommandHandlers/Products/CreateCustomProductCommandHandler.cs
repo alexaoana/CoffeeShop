@@ -1,13 +1,20 @@
-﻿using CoffeeShop.Core.Commands.Products;
+﻿using AutoMapper;
+using CoffeeShop.Core.Commands.Products;
+using CoffeeShop.Core.DTOs;
 using CoffeeShop.Core.Enums;
 using CoffeeShop.Core.Patterns.Decorator;
 using MediatR;
 
 namespace CoffeeShop.Core.CommandHandlers.Products
 {
-    public class CreateCustomProductCommandHandler : IRequestHandler<CreateCustomProductCommand, bool>
+    public class CreateCustomProductCommandHandler : IRequestHandler<CreateCustomProductCommand, ProductDTO>
     {
-        public async Task<bool> Handle(CreateCustomProductCommand request, CancellationToken cancellationToken)
+        private IMapper _mapper;
+        public CreateCustomProductCommandHandler(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+        public async Task<ProductDTO> Handle(CreateCustomProductCommand request, CancellationToken cancellationToken)
         {
             var product = request.Product;
             foreach (var ingredient in request.Ingredients)
@@ -38,7 +45,7 @@ namespace CoffeeShop.Core.CommandHandlers.Products
                         product = new CoffeeWithIce(product).GetProduct();
                         break;
                 }
-            return true;
+            return _mapper.Map<Product, ProductDTO>(product);
         }
     }
 }

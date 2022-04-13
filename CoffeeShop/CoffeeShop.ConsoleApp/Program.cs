@@ -18,7 +18,6 @@ using CoffeeShop.Core.QueryHandlers.Orders;
 using AutoMapper;
 using CoffeeShop.Core.AutoMapperProfiles;
 using CoffeeShop.Core.Domain;
-using CoffeeShop.ConsoleApp;
 using CoffeeShop.Core.Paginate;
 
 /**
@@ -116,24 +115,7 @@ var order = new Order
     OrderStatus = OrderStatus.Placed
 };**/
 
-var task11 = new Task11();
-
-
-
-//task11.populateDatabase();
-//var ordersOfUser = await task11.GetOrdersOfUser(new User { Id = 2 });
-//var ordersByStatus = await task11.GetOrdersByStatus();
-//var mostExpensiveOrder = await task11.GetMostExpensiveOrder();
-//var top3MostBoughtProducts = await task11.Top3MostBoughtProducts();
-//var pricesDictionary = await task11.GetAveragePriceForProductCategories();
-var emptyOrders = await task11.GetAllEmptyOrders();
-var mostExpensivePrice = task11.GetMostExpensivePrice();
-var order = task11.GetOrderById(3);
-var usersFromPage = await task11.GetUsersFromPage(new Filter
+ static void Main(string[] args)
 {
-    PageNumber = 1,
-    PageSize = 2,
-});
-var orderwithMostProducts = await task11.GetOrdeWithMostProducts();
 
-Console.ReadLine();
+}

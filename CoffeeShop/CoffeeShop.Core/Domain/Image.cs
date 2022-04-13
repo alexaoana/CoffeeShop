@@ -10,6 +10,10 @@ namespace CoffeeShop.Core.Domain
         public string AzurePath { get; set; }
         public int ProductId { get; set; }
         public Product Product { get; set; }
+        public Image()
+        {
+
+        }
         public Image(int id, string azurePath)
         {
             Id = id;

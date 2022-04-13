@@ -17,7 +17,7 @@ namespace CoffeeShop.Core.CommandHandlers.Users
             var numberOfProducts = _unitOfWork.OrderRepository.GetOrder(request.OrderId).NumberOfProducts;
              if (user.Discount < 1)
              {
-                user.Discount += numberOfProducts * decimal.Parse("0.001");
+                user.Discount += numberOfProducts * 0.001;
                 _unitOfWork.UserRepository.UpdateUser(user);
              }    
             return true;

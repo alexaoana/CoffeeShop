@@ -13,7 +13,7 @@ namespace CoffeeShop.Core.Patterns.Strategy
             _cvv = cvv;
             _expirationDate = expirationDate;
         }
-        public void Pay(decimal price)
+        public void Pay(double price)
         {
             Console.WriteLine($"I paid {price} lei with my card having the number {_cardNumber} and the cvv {_cvv}");
         }

@@ -10,7 +10,7 @@ namespace CoffeeShop.Core.Patterns.Strategy
             _payment = payment;
         }
 
-        public void executePayment(decimal price)
+        public void executePayment(double price)
         {
             _payment.Pay(price);
         }

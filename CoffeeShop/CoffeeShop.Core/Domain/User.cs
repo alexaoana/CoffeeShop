@@ -19,19 +19,13 @@ namespace CoffeeShop.Core
         [MaxLength(20)]
         public string Password { get; set; }
         [Required]
-        public decimal Discount { 
-            get
-            {
-                return Discount;
-            }
-            set
-            {
-                if (value >= 0 && value <= 1)
-                    Discount = value;
-            }
-        }
+        public double Discount {get; set; }
         public Address Address { get; set; }
         public List<Order>? Orders { get; set; }
+        public User()
+        {
+
+        }
         public User(int id, string firstName, string lastName, string email, string password)
         {
             Id = id;
@@ -39,7 +33,7 @@ namespace CoffeeShop.Core
             LastName = lastName;
             Email = email;
             Password = password;
-            Discount = decimal.One;
+            Discount = 0;
             Orders = new List<Order>();
         }
         public User(string firstName, string lastName, string email, string password)
@@ -48,7 +42,7 @@ namespace CoffeeShop.Core
             LastName = lastName;
             Email = email;
             Password = password;
-            Discount = decimal.One;
+            Discount = 0;
             Orders = new List<Order>();
         }
     }

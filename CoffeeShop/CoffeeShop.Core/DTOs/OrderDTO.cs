@@ -8,7 +8,7 @@ namespace CoffeeShop.Core.DTOs
         public User User { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public List<ProductOrder>? ProductOrders { get; set; }
-        public decimal Price { get; }
+        public double Price { get; }
         public int NumberOfProducts { get; }
     }
 }

@@ -9,6 +9,7 @@ namespace CoffeeShop.Core.Abstract
         IProductRepository ProductRepository { get; set; }
         IOrderRepository OrderRepository { get; set; }
         IProductOrderRepository ProductOrderRepository { get; set; }
+        IImageRepository ImageRepository { get; set; }
         void SaveChanges();
     }
 }

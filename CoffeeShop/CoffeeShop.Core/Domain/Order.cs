@@ -11,12 +11,12 @@ namespace CoffeeShop.Core
         public User User { get; set; }
         [Required]
         public OrderStatus OrderStatus { get; set; }
-        public decimal Price
+        public double Price
         {
             get
             {
                 return ProductOrders
-                    .Aggregate(decimal.Zero, (price, productOrder) => price + productOrder.Quantity * productOrder.Product.Price);
+                    .Aggregate(0.0, (price, productOrder) => price + productOrder.Quantity * productOrder.Product.Price);
             }
         }
         public int NumberOfProducts

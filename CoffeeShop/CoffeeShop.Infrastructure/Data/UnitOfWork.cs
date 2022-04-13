@@ -12,6 +12,7 @@ namespace CoffeeShop.Infrastructure.Data
         private IOrderRepository _orderRepository;
         private IProductOrderRepository _productOrderRepository;
         private IProductRepository _productRepository;
+        private IImageRepository _imageRepository;
 
         public UnitOfWork(AppDbContext appDBContext)
         {
@@ -83,6 +84,19 @@ namespace CoffeeShop.Infrastructure.Data
             set
             {
                 _productOrderRepository = value;
+            }
+        }
+        public IImageRepository ImageRepository
+        {
+            get
+            {
+                if (_imageRepository == null)
+                    _imageRepository = new ImageRepository(_appDbContext);
+                return _imageRepository;
+            }
+            set
+            {
+                _imageRepository = value;
             }
         }
 

@@ -18,18 +18,22 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         {
             return _appDbContext.Orders
                 .Include(x => x.ProductOrders)
+                .ThenInclude(x => x.Product)
                 .SingleOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<Order> GetOrders()
         {
-            return _appDbContext.Orders;
+            return _appDbContext.Orders
+                .Include(x => x.ProductOrders)
+                .ThenInclude(x => x.Product);
         }
 
         public IEnumerable<Order> GetOrders(Filter filter)
         {
             return _appDbContext.Orders
                 .Include(x => x.ProductOrders)
+                .ThenInclude(x => x.Product)
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize);
         }

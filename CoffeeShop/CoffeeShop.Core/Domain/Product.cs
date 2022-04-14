@@ -1,6 +1,7 @@
 ﻿using CoffeeShop.Core.Domain;
 using CoffeeShop.Core.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CoffeeShop.Core
 {
@@ -27,6 +28,7 @@ namespace CoffeeShop.Core
         }
         [Required]
         public ProductUnit ProductUnit { get; set; }
+        [JsonIgnore]
         public List<ProductOrder>? ProductOrders { get; set; }
         public Image Image { get; set; }
         [Required]

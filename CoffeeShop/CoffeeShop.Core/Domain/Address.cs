@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CoffeeShop.Core
 {
@@ -15,7 +16,9 @@ namespace CoffeeShop.Core
         [Required]
         [MaxLength(4)]
         public string Number { get; set; }
+        [JsonIgnore]
         public int UserId { get; set; }
+        [JsonIgnore]
         public User User { get; set; }
         public Address()
         {

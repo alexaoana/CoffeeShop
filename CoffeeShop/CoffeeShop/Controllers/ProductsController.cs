@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
 using CoffeeShop.Core;
 using CoffeeShop.Core.Commands.Products;
+using CoffeeShop.Core.DTOs;
 using CoffeeShop.Core.Enums;
 using CoffeeShop.Core.Paginate;
 using CoffeeShop.Core.Queries.Products;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using CoffeeShop.Core.DTOs;
-using CoffeeShop.Core.Domain;
-using CoffeeShop.Core.Commands.Images;
 
 namespace CoffeeShop.Controllers
 {
@@ -25,42 +23,39 @@ namespace CoffeeShop.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProducts(Filter filter)
+        public async Task<IActionResult> GetProducts([FromQuery]Filter filter)
         {
             var products = await _mediator.Send(new GetProductsQuery { Filter = filter });
             return Ok(products);
         }
-
+        
         [HttpPost]
         [Route("{productId}")]
-        public async Task<IActionResult> CreateCustomProduct(List<Ingredient> ingredients, int productId)
+        public async Task<IActionResult> CreateCustomProduct([FromBody]List<Ingredient> ingredients, int productId)
         {
             var product = await _mediator.Send(new CreateCustomProductCommand 
             { 
                 Ingredients = ingredients,
                 Product = _mapper.Map<ProductDTO, Product>(await _mediator.Send(new GetProductByIdQuery { ProductId = productId}))
             });
-            return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, product);
+            return CreatedAtAction(nameof(GetProductById), new { id = _mapper.Map<ProductDTO, Product>(product).Id }, product);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct(string name, string description, int coffeeIntensity, double price, int amount, ProductUnit productUnit, string azurePath)
+        public async Task<IActionResult> CreateProduct([FromBody]ProductDTO productDTO)
         {
             var product = await _mediator.Send(new CreateProductCommand
             {
-                Name = name,
-                Description = description,
-                CoffeeIntensity = coffeeIntensity,
-                Price = price,
-                Amount = amount,
-                ProductUnit = productUnit
+                Name = productDTO.Name,
+                Description = productDTO.Description,
+                CoffeeIntensity = productDTO.CoffeeIntensity,
+                Price = productDTO.Price,
+                Amount = productDTO.Amount,
+                ProductUnit = productDTO.ProductUnit,
+                Image = productDTO.Image
             });
-            var image = await _mediator.Send(new CreateImageCommand
-            {
-                AzurePath = azurePath,
-                Product = _mapper.Map<ProductDTO, Product>(product)
-            });
-            return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, product);
+            
+            return CreatedAtAction(nameof(GetProductById), new { id = _mapper.Map<ProductDTO, Product>(product).Id }, product);
         }
 
         [HttpGet]

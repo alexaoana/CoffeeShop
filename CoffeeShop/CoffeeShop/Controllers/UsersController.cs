@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CoffeeShop.Core;
-using CoffeeShop.Core.Commands.Addresses;
 using CoffeeShop.Core.Commands.Users;
 using CoffeeShop.Core.DTOs;
 using CoffeeShop.Core.Queries.Orders;
@@ -40,23 +39,18 @@ namespace CoffeeShop.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> CreateUser(string firstName, string lastName, string email, string password, string addressCity, string addressStreet, string addressNumber)
+        public async Task<IActionResult> CreateUser([FromBody]UserDTO userDTO)
         {
             var user = await _mediator.Send(new CreateUserCommand
             {
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                Password = password
+                FirstName = userDTO.FirstName,
+                LastName = userDTO.LastName,
+                Email = userDTO.Email,
+                Password = userDTO.Password,
+                Address = userDTO.Address,
             });
-            var address = await _mediator.Send(new CreateAddressCommand
-            {
-                City = addressCity,
-                Street = addressStreet,
-                Number = addressNumber,
-                User = _mapper.Map<UserDTO, User>(user)
-            });
-            return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+            
+            return CreatedAtAction(nameof(GetUserById), new { id = _mapper.Map<UserDTO, User>(user).Id }, user);
         }
 
         [HttpGet]

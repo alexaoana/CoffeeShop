@@ -13,5 +13,6 @@ namespace CoffeeShop.Core.Commands.Products
         public double Price { get; set; }
         public ProductUnit ProductUnit { get; set; }
         public int CoffeeIntensity { get; set; }
+        public Image Image { get; set; }
     }
 }

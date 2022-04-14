@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using CoffeeShop.Core;
 using CoffeeShop.Core.Commands.Orders;
+using CoffeeShop.Core.DTOs;
 using CoffeeShop.Core.Queries.Orders;
+using CoffeeShop.Core.Queries.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,16 +32,24 @@ namespace CoffeeShop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrder(User user)
+        public async Task<IActionResult> CreateOrder([FromBody]int userId)
         {
-            var order = await _mediator.Send(new CreateOrderCommand { User = user });
-            return CreatedAtAction(nameof(GetOrderById), new { Id = order.Id }, order);
+            var user = _mapper.Map<UserDTO, User>(await _mediator.Send(new GetUserByIdQuery
+            {
+                UserId = userId
+            }));
+            user.Id = userId;
+            var order = await _mediator.Send(new CreateOrderCommand
+            {
+                User = user
+            });
+            return CreatedAtAction(nameof(GetOrderById), new { Id = _mapper.Map<OrderDTO, Order>(order).Id }, order);
         }
 
         [HttpPut]
-        public async Task<IActionResult> PayOrder(Order order)
+        public async Task<IActionResult> PayOrder([FromBody]OrderDTO order)
         {
-            var result = await _mediator.Send(new PayOrderCommand { Order = order });
+            var result = await _mediator.Send(new PayOrderCommand { Order = _mapper.Map<OrderDTO, Order>(order) });
             return Ok(result);
         }
 

@@ -4,12 +4,10 @@ namespace CoffeeShop.Core.Abstract
 {
     public interface IUnitOfWork
     {
-        IAddressRepository AddressRepository { get; set; }
         IUserRepository UserRepository { get; set; }
         IProductRepository ProductRepository { get; set; }
         IOrderRepository OrderRepository { get; set; }
         IProductOrderRepository ProductOrderRepository { get; set; }
-        IImageRepository ImageRepository { get; set; }
         void SaveChanges();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CoffeeShop.Core;
 using CoffeeShop.Core.Commands.ProductOrders;
+using CoffeeShop.Core.DTOs;
 using CoffeeShop.Core.Queries.ProductOrders;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -28,18 +29,17 @@ namespace CoffeeShop.Controllers
                 return NotFound();
             return Ok(productOrder);
         }
-        /**
+        
         [HttpPost]
-        public async Task<IActionResult> CreateProductOrder(Product product, Order order, int qunatity)
+        public async Task<IActionResult> CreateProductOrder([FromBody]ProductOrderDTO productOrderDTO)
         {
             var productOrder = await _mediator.Send(new CreateProductOrderCommand
             {
-                Product = product,
-                Order = order,
-                Quantity = qunatity
+                Product = productOrderDTO.Product,
+                Order = productOrderDTO.Order,
+                Quantity = productOrderDTO.Quantity
             });
-            return CreatedAtAction(nameof(GetProductOrderById), new { Id = productOrder.Id }, productOrder);
-        }**/
-
+            return CreatedAtAction(nameof(GetProductOrderById), new { Id = _mapper.Map<ProductOrderDTO, ProductOrder>(productOrder).Id }, productOrder);
+        }
     }
 }

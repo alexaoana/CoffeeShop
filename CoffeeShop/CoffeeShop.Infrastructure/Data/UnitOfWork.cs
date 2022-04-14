@@ -7,30 +7,14 @@ namespace CoffeeShop.Infrastructure.Data
     public class UnitOfWork : IUnitOfWork
     {
         private AppDbContext _appDbContext;
-        private IAddressRepository _addressRepository;
         private IUserRepository _userRepository;
         private IOrderRepository _orderRepository;
         private IProductOrderRepository _productOrderRepository;
         private IProductRepository _productRepository;
-        private IImageRepository _imageRepository;
 
         public UnitOfWork(AppDbContext appDBContext)
         {
             _appDbContext = appDBContext;
-        }
-
-        public IAddressRepository AddressRepository
-        {
-            get
-            {
-                if (_addressRepository == null)
-                    _addressRepository = new AddressRepository(_appDbContext);
-                return _addressRepository;
-            }
-            set
-            {
-                _addressRepository = value;
-            }
         }
 
         public IUserRepository UserRepository
@@ -84,19 +68,6 @@ namespace CoffeeShop.Infrastructure.Data
             set
             {
                 _productOrderRepository = value;
-            }
-        }
-        public IImageRepository ImageRepository
-        {
-            get
-            {
-                if (_imageRepository == null)
-                    _imageRepository = new ImageRepository(_appDbContext);
-                return _imageRepository;
-            }
-            set
-            {
-                _imageRepository = value;
             }
         }
 

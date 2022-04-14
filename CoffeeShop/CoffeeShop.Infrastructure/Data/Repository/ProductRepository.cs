@@ -21,7 +21,7 @@ namespace CoffeeShop.Infrastructure.Data.Repository
 
         public IEnumerable<Product> GetProducts()
         {
-            return _appDbContext.Products.Include(x => x.ProductOrders);
+            return _appDbContext.Products;
         }
 
         public IEnumerable<Product> GetProducts(Filter filter)

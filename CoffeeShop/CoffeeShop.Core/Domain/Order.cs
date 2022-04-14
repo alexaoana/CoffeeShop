@@ -1,5 +1,6 @@
 ﻿using CoffeeShop.Core.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CoffeeShop.Core
 {
@@ -8,6 +9,7 @@ namespace CoffeeShop.Core
         [Required]
         public int Id { get; set; }
         public int UserId { get; set; }
+        [JsonIgnore]
         public User User { get; set; }
         [Required]
         public OrderStatus OrderStatus { get; set; }

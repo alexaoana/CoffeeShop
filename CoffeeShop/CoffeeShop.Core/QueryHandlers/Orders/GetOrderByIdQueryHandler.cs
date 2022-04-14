@@ -17,8 +17,9 @@ namespace CoffeeShop.Core.QueryHandlers.Orders
         }
         public async Task<OrderDTO> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<Order, OrderDTO>(_unitOfWork.OrderRepository
-                .GetOrder(request.OrderId));
+            var order = _unitOfWork.OrderRepository
+                .GetOrder(request.OrderId);
+            return _mapper.Map<Order, OrderDTO>(order);
         }
     }
 }

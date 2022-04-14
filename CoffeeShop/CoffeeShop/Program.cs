@@ -1,7 +1,5 @@
-using AutoMapper;
 using CoffeeShop.Core.Abstract;
 using CoffeeShop.Core.AutoMapperProfiles;
-using CoffeeShop.Core.Commands.Images;
 using CoffeeShop.Core.Commands.Orders;
 using CoffeeShop.Core.Commands.ProductOrders;
 using CoffeeShop.Core.Commands.Products;
@@ -22,7 +20,6 @@ builder.Services.AddMediatR(typeof(CreateProductCommand));
 builder.Services.AddMediatR(typeof(CreateCustomProductCommand));
 builder.Services.AddMediatR(typeof(CreateOrderCommand));
 builder.Services.AddMediatR(typeof(CreateProductOrderCommand));
-builder.Services.AddMediatR(typeof(CreateImageCommand));
 
 builder.Services.AddAutoMapper(typeof(UserProfile));
 builder.Services.AddAutoMapper(typeof(ProductProfile));

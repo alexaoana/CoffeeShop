@@ -5,7 +5,7 @@ namespace CoffeeShop.Core.Commands.Orders
 {
     public class PayOrderCommand : IRequest<bool>
     {
-        public Order Order { get; set; }
+        public int OrderId { get; set; }
         public Payment Payment { get; set; }
     }
 }

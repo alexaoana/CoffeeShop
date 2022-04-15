@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using CoffeeShop.Core;
 using CoffeeShop.Core.Commands.ProductOrders;
+using CoffeeShop.Core.Commands.Products;
 using CoffeeShop.Core.DTOs;
+using CoffeeShop.Core.Queries.Orders;
 using CoffeeShop.Core.Queries.ProductOrders;
+using CoffeeShop.Core.Queries.Products;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,9 +38,10 @@ namespace CoffeeShop.Controllers
         {
             var productOrder = await _mediator.Send(new CreateProductOrderCommand
             {
-                Product = productOrderDTO.Product,
-                Order = productOrderDTO.Order,
-                Quantity = productOrderDTO.Quantity
+                ProductId = productOrderDTO.ProductId,
+                OrderId = productOrderDTO.OrderId,
+                Quantity = productOrderDTO.Quantity,
+                Ingredients = productOrderDTO.Ingredients
             });
             return CreatedAtAction(nameof(GetProductOrderById), new { Id = _mapper.Map<ProductOrderDTO, ProductOrder>(productOrder).Id }, productOrder);
         }

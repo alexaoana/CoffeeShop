@@ -19,7 +19,7 @@ namespace CoffeeShop.Core.CommandHandlers.Orders
         public async Task<OrderDTO> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             var order = new Order();
-            order.User = request.User;
+            order.UserId = request.UserId;
             _unitOfWork.OrderRepository.AddOrder(order);
             return _mapper.Map<Order, OrderDTO>(order);
         }

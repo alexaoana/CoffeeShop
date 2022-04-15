@@ -4,9 +4,9 @@ using MediatR;
 
 namespace CoffeeShop.Core.Commands.Products
 {
-    public class CreateCustomProductCommand : IRequest<ProductDTO>
+    public class CreateCustomProductCommand : IRequest<ProductOrderDTO>
     {
-        public Product Product { get; set; }
+        public ProductOrder Product { get; set; }
         public List<Ingredient> Ingredients { get; set; }
     }
 }

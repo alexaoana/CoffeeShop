@@ -4,7 +4,7 @@ namespace CoffeeShop.Core.Patterns.Decorator
 {
     public class CoffeeWithIce : CoffeeDecorator
     {
-        public CoffeeWithIce(Product product) : base(product)
+        public CoffeeWithIce(ProductOrder product) : base(product)
         {
             this._product.Description = this._product.Description + " with ice";
             this._product.Price = this._product.Price + 1;

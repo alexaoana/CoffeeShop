@@ -7,15 +7,33 @@ namespace CoffeeShop.Core
     {
         [Required]
         public int Id { get; set; }
-        [JsonIgnore]
         public int ProductId { get; set; }
         public Product Product { get; set; }
-        [JsonIgnore]
         public int OrderId { get; set; }
         [JsonIgnore]
         public Order Order { get; set; }
         [Required]
         public int Quantity { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string Name { get; set; }
+        [Required]
+        [MaxLength(200)]
+        public string Description { get; set; }
+        [Required]
+        public int Amount
+        {
+            get;
+            set;
+        }
+        [Required]
+        public double Price
+        {
+            get;
+            set;
+        }
+        [Required]
+        public int CoffeeIntensity { get; set; }
         public ProductOrder()
         {
 

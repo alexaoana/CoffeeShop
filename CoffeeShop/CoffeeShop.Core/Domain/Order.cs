@@ -18,7 +18,7 @@ namespace CoffeeShop.Core
             get
             {
                 return ProductOrders
-                    .Aggregate(0.0, (price, productOrder) => price + productOrder.Quantity * productOrder.Product.Price);
+                    .Aggregate(0.0, (price, productOrder) => price + productOrder.Quantity * productOrder.Price);
             }
         }
         public int NumberOfProducts

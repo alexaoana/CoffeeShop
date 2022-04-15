@@ -16,17 +16,20 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         public Product GetProduct(int id)
         {
             return _appDbContext.Products
+                .Include(x => x.Image)
                 .SingleOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<Product> GetProducts()
         {
-            return _appDbContext.Products;
+            return _appDbContext.Products
+                .Include(x => x.Image);
         }
 
         public IEnumerable<Product> GetProducts(Filter filter)
         {
             return _appDbContext.Products
+                .Include(x => x.Image)
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize);
         }

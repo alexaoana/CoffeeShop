@@ -47,7 +47,7 @@ namespace CoffeeShop.Controllers
                 LastName = userDTO.LastName,
                 Email = userDTO.Email,
                 Password = userDTO.Password,
-                Address = userDTO.Address,
+                Address = new Address(userDTO.AddressCity, userDTO.AddressStreet, userDTO.AddressNumber)
             });
             
             return CreatedAtAction(nameof(GetUserById), new { id = _mapper.Map<UserDTO, User>(user).Id }, user);
@@ -57,10 +57,10 @@ namespace CoffeeShop.Controllers
         [Route("{id}/orders")]
         public async Task<IActionResult> GetOrdersOfUser(int id)
         {
-            var user = await _mediator.Send(new GetOrdersOfUserQuery { UserId = id });
-            if (user == null)
+            var orders = await _mediator.Send(new GetOrdersOfUserQuery { UserId = id });
+            if (orders == null)
                 return NotFound();
-            return Ok(user);
+            return Ok(orders);
         }
     }
 }

@@ -5,6 +5,6 @@ namespace CoffeeShop.Core.Commands.Orders
 {
     public class CreateOrderCommand : IRequest<OrderDTO>
     {
-        public User User { get; set; }
+        public int UserId { get; set; }
     }
 }

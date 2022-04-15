@@ -17,18 +17,22 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         {
             return _appDbContext.Users
                  .Include(x => x.Orders)
-                .SingleOrDefault(o => o.Id == id);
+                 .Include(x => x.Address)
+                 .SingleOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<User> GetUsers()
         {
-            return _appDbContext.Users.Include(x => x.Orders);
+            return _appDbContext.Users
+                .Include(x => x.Orders)
+                .Include(x => x.Address);
         }
 
         public IEnumerable<User> GetUsers(Filter filter)
         {
             return _appDbContext.Users
                 .Include(x => x.Orders)
+                .Include(x => x.Address)
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize);
         }
@@ -56,6 +60,7 @@ namespace CoffeeShop.Infrastructure.Data.Repository
                     item.Password = user.Password;
                     item.Orders = user.Orders;
                     item.Discount = user.Discount;
+                    item.Orders = user.Orders;
                 }
             _appDbContext.SaveChanges();
         }

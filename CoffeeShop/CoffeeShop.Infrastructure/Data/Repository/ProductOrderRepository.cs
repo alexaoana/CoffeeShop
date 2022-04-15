@@ -17,20 +17,20 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         public ProductOrder GetProductOrder(int id)
         {
             return _appDbContext.ProductOrders
-                .Include(x => x.Product)
+                .Include(x => x.Order)
                 .SingleOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<ProductOrder> GetProductOrders()
         {
             return _appDbContext.ProductOrders
-                .Include(x => x.Product);
+                .Include(x => x.Order);
         }
 
         public IEnumerable<ProductOrder> GetProductOrders(Filter filter)
         {
             return _appDbContext.ProductOrders
-                .Include(x => x.Product)
+                .Include(x => x.Order)
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize);
         }

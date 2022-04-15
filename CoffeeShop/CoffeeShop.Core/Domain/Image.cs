@@ -9,7 +9,6 @@ namespace CoffeeShop.Core.Domain
         public int Id { get; set; }
         [Required]
         public string AzurePath { get; set; }
-        [JsonIgnore]
         public int ProductId { get; set; }
         [JsonIgnore]
         public Product Product { get; set; }

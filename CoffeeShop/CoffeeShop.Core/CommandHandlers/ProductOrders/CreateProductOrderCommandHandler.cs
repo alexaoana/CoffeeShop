@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
 using CoffeeShop.Core.Abstract;
+using CoffeeShop.Core.CommandHandlers.Products;
 using CoffeeShop.Core.Commands.ProductOrders;
+using CoffeeShop.Core.Commands.Products;
 using CoffeeShop.Core.DTOs;
+using CoffeeShop.Core.Queries.Products;
+using CoffeeShop.Core.QueryHandlers.Products;
 using MediatR;
 
 namespace CoffeeShop.Core.CommandHandlers.ProductOrders
@@ -18,10 +22,26 @@ namespace CoffeeShop.Core.CommandHandlers.ProductOrders
         public async Task<ProductOrderDTO> Handle(CreateProductOrderCommand request, CancellationToken cancellationToken)
         {
             var productOrder = new ProductOrder(request.Quantity);
-            productOrder.Product = request.Product;
-            productOrder.Order = request.Order;
-            _unitOfWork.ProductOrderRepository.AddProductOrder(productOrder);
-            return _mapper.Map<ProductOrder, ProductOrderDTO>(productOrder);
+            productOrder.ProductId = request.ProductId;
+            productOrder.OrderId = request.OrderId;
+            var query = new GetProductByIdQueryHandler(_unitOfWork, _mapper);
+            var product = _mapper.Map<ProductDTO, Product>(await query.Handle(new GetProductByIdQuery
+            {
+                ProductId = request.ProductId,
+            }, cancellationToken));
+            productOrder.Name = product.Name;
+            productOrder.Description = product.Description;
+            productOrder.Price = product.Price;
+            productOrder.Amount = product.Amount;
+            productOrder.CoffeeIntensity = product.CoffeeIntensity;
+            var command = new CreateCustomProductCommandHandler(_mapper);
+            var result = await command.Handle(new CreateCustomProductCommand
+            {
+                Product = productOrder,
+                Ingredients = request.Ingredients,
+            }, cancellationToken);
+            _unitOfWork.ProductOrderRepository.AddProductOrder(_mapper.Map<ProductOrderDTO, ProductOrder>(result));
+            return result;
         }
     }
 }

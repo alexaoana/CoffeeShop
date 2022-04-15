@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CoffeeShop.Core;
 using CoffeeShop.Core.Commands.Products;
+using CoffeeShop.Core.Domain;
 using CoffeeShop.Core.DTOs;
 using CoffeeShop.Core.Enums;
 using CoffeeShop.Core.Paginate;
@@ -28,18 +29,6 @@ namespace CoffeeShop.Controllers
             var products = await _mediator.Send(new GetProductsQuery { Filter = filter });
             return Ok(products);
         }
-        
-        [HttpPost]
-        [Route("{productId}")]
-        public async Task<IActionResult> CreateCustomProduct([FromBody]List<Ingredient> ingredients, int productId)
-        {
-            var product = await _mediator.Send(new CreateCustomProductCommand 
-            { 
-                Ingredients = ingredients,
-                Product = _mapper.Map<ProductDTO, Product>(await _mediator.Send(new GetProductByIdQuery { ProductId = productId}))
-            });
-            return CreatedAtAction(nameof(GetProductById), new { id = _mapper.Map<ProductDTO, Product>(product).Id }, product);
-        }
 
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody]ProductDTO productDTO)
@@ -52,7 +41,7 @@ namespace CoffeeShop.Controllers
                 Price = productDTO.Price,
                 Amount = productDTO.Amount,
                 ProductUnit = productDTO.ProductUnit,
-                Image = productDTO.Image
+                Image = new Image(productDTO.ImageAzurePath)
             });
             
             return CreatedAtAction(nameof(GetProductById), new { id = _mapper.Map<ProductDTO, Product>(product).Id }, product);

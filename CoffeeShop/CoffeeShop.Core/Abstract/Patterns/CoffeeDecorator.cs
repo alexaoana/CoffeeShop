@@ -1,15 +1,15 @@
 ﻿namespace CoffeeShop.Core.Abstract.Patterns
 {
-    public abstract class CoffeeDecorator : Product
+    public abstract class CoffeeDecorator : ProductOrder
     {
-        protected Product _product;
+        protected ProductOrder _product;
 
-        public CoffeeDecorator(Product product)
+        public CoffeeDecorator(ProductOrder product)
         {
             _product = product;
         }
 
-        public Product GetProduct()
+        public ProductOrder GetProduct()
         {
             return _product;
         }

@@ -18,7 +18,7 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         {
             return _appDbContext.Orders
                 .Include(x => x.ProductOrders)
-                .ThenInclude(x => x.Product)
+                .Include(x => x.User)
                 .SingleOrDefault(o => o.Id == id);
         }
 
@@ -26,14 +26,14 @@ namespace CoffeeShop.Infrastructure.Data.Repository
         {
             return _appDbContext.Orders
                 .Include(x => x.ProductOrders)
-                .ThenInclude(x => x.Product);
+                .Include(x => x.User);
         }
 
         public IEnumerable<Order> GetOrders(Filter filter)
         {
             return _appDbContext.Orders
                 .Include(x => x.ProductOrders)
-                .ThenInclude(x => x.Product)
+                .Include(x => x.User)
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize);
         }

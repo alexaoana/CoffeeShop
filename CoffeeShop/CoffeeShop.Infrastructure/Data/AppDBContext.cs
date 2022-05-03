@@ -22,7 +22,7 @@ namespace CoffeeShop.Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
         {
-            dbContextOptionsBuilder.UseSqlServer(@"Server=ROMOB41210\SQLEXPRESS;Database=CoffeeShop;Trusted_Connection=True;MultipleActiveResultSets = True");
+            //dbContextOptionsBuilder.UseSqlServer(@"Server=ROMOB41210\SQLEXPRESS;Database=CoffeeShop;Trusted_Connection=True;MultipleActiveResultSets = True");
         }
 
         public DbSet<User> Users { get; set; }

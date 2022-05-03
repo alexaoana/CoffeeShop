@@ -38,13 +38,31 @@ namespace CoffeeShop.Core
         {
 
         }
-        public ProductOrder(int id, int quantity)
+        public ProductOrder(Product product)
+        {
+            Name = product.Name;
+            Description = product.Description;
+            Amount = product.Amount;
+            Price = product.Price;
+            CoffeeIntensity = product.CoffeeIntensity;
+        }
+        public ProductOrder(int id, int quantity, Product product)
         {
             Id = id;
+            Name = product.Name;
+            Description = product.Description;
+            Amount = product.Amount;
+            Price = product.Price;
+            CoffeeIntensity= product.CoffeeIntensity;
             Quantity = quantity;
         }
-        public ProductOrder(int quantity)
+        public ProductOrder(int quantity, Product product)
         {
+            Name = product.Name;
+            Description = product.Description;
+            Amount = product.Amount;
+            Price = product.Price;
+            CoffeeIntensity = product.CoffeeIntensity;
             Quantity = quantity;
         }
     }

@@ -1,0 +1,40 @@
+﻿using CoffeeShop.Core.DTOs;
+using CoffeeShop.Core.Enums;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
+
+namespace Integration.Tests
+{
+    [TestClass]
+    public class OrderControllerTests
+    {
+        private static TestContext _testContext;
+        private static WebApplicationFactory<Program> _factory;
+
+        [ClassInitialize]
+        public static void OrderControllerClassInitialize(TestContext testContext)
+        {
+            _testContext = testContext;
+            _factory = new CustomWebApplicationFactory<Program>();
+        }
+
+        [TestMethod]
+        public async Task Get_Order_By_Id_ShouldReturnExistingOrder()
+        {
+            var client = _factory.CreateClient();
+            var response = await client.GetAsync("api/Orders/1");
+            var result = await response.Content.ReadAsStringAsync();
+            var order = JsonConvert.DeserializeObject<OrderDTO>(result);
+            OrderAsserts(order);
+        }
+
+        private void OrderAsserts(OrderDTO order)
+        {
+            Assert.AreEqual(order.OrderStatus, OrderStatus.InProgress);
+            Assert.AreEqual(order.User.Id, 1);
+        }
+    }
+}

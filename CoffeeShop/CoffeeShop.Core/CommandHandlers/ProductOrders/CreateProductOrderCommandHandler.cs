@@ -21,19 +21,14 @@ namespace CoffeeShop.Core.CommandHandlers.ProductOrders
         }
         public async Task<ProductOrderDTO> Handle(CreateProductOrderCommand request, CancellationToken cancellationToken)
         {
-            var productOrder = new ProductOrder(request.Quantity);
-            productOrder.ProductId = request.ProductId;
-            productOrder.OrderId = request.OrderId;
             var query = new GetProductByIdQueryHandler(_unitOfWork, _mapper);
             var product = _mapper.Map<ProductDTO, Product>(await query.Handle(new GetProductByIdQuery
             {
                 ProductId = request.ProductId,
             }, cancellationToken));
-            productOrder.Name = product.Name;
-            productOrder.Description = product.Description;
-            productOrder.Price = product.Price;
-            productOrder.Amount = product.Amount;
-            productOrder.CoffeeIntensity = product.CoffeeIntensity;
+            var productOrder = new ProductOrder(request.Quantity, product);
+            productOrder.ProductId = request.ProductId;
+            productOrder.OrderId = request.OrderId;
             var command = new CreateCustomProductCommandHandler(_mapper);
             var result = await command.Handle(new CreateCustomProductCommand
             {

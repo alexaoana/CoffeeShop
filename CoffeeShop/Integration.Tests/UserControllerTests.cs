@@ -69,23 +69,26 @@ namespace Integration.Tests
             var client = _factory.CreateClient();
             var response = await client.GetAsync("api/Users/1/orders");
             var result = await response.Content.ReadAsStringAsync();
-            var order = JsonConvert.DeserializeObject<OrderDTO>(result);
-            Assert.AreEqual(order, null);
+            var orders = JsonConvert.DeserializeObject<List<OrderDTO>>(result);
+            Assert.AreNotEqual(orders, null);
+            Assert.AreEqual(orders.Count, 1);
         }
 
         [TestMethod]
         public async Task Post_User_ShoulReturnCreatedResponse()
         {
-            var user = new CreateUserCommand
+            var user = new UserDTO
             {
                 FirstName = "Mihai",
                 LastName = "Popescu",
                 Email = "mihai.popescu@y.com",
                 Password = "mihai",
-                Address = new Address("Timisoara", "Revolutiei", "12A")
+                AddressCity = "Timisoara",
+                AddressStreet = "Bulevardul Revolutiei",
+                AddressNumber = "12A"
             };
             var client = _factory.CreateClient();
-            var response = await client.PostAsync("api/Users",
+            var response = await client.PostAsync("/api/Users",
                 new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json"));
             Assert.IsTrue(HttpStatusCode.Created == response.StatusCode);
         }
@@ -93,13 +96,15 @@ namespace Integration.Tests
         [TestMethod]
         public async Task Post_User_ShouldReturnCreatedUser()
         {
-            var newUser = new CreateUserCommand
+            var newUser = new UserDTO
             {
                 FirstName = "Mihai",
                 LastName = "Popescu",
                 Email = "mihai.popescu@y.com",
                 Password = "mihai",
-                Address = new Address("Timisoara", "Revolutiei", "12A")
+                AddressCity = "Timisoara",
+                AddressStreet = "Bulevardul Revolutiei",
+                AddressNumber = "12A"
             };
             var client = _factory.CreateClient();
             var response = await client.PostAsync("api/Users",
@@ -111,9 +116,9 @@ namespace Integration.Tests
             Assert.AreEqual(newUser.LastName, user.LastName);
             Assert.AreEqual(newUser.Email, user.Email);
             Assert.AreEqual(newUser.Password, user.Password);
-            Assert.AreEqual(newUser.Address.City, user.AddressCity);
-            Assert.AreEqual(newUser.Address.Street, user.AddressStreet);
-            Assert.AreEqual(newUser.Address.Number, user.AddressNumber);
+            Assert.AreEqual(newUser.AddressCity, user.AddressCity);
+            Assert.AreEqual(newUser.AddressStreet, user.AddressStreet);
+            Assert.AreEqual(newUser.AddressNumber, user.AddressNumber);
         }
 
         [ClassCleanup]

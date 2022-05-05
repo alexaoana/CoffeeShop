@@ -50,7 +50,8 @@ namespace CoffeeShop.Controllers
                 Address = new Address(userDTO.AddressCity, userDTO.AddressStreet, userDTO.AddressNumber)
             });
             
-            return CreatedAtAction(nameof(GetUserById), new { id = _mapper.Map<UserDTO, User>(user).Id }, user);
+            var result = CreatedAtAction(nameof(GetUserById), new { id = _mapper.Map<UserDTO, User>(user).Id }, user);
+            return result;
         }
 
         [HttpGet]

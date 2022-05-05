@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Integration.Tests
@@ -29,6 +32,28 @@ namespace Integration.Tests
             var result = await response.Content.ReadAsStringAsync();
             var order = JsonConvert.DeserializeObject<OrderDTO>(result);
             OrderAsserts(order);
+        }
+
+        [TestMethod]
+        public async Task Post_Order_ShouldReturnCreatedResponse()
+        {
+            var client = _factory.CreateClient();
+            var response = await client.PostAsync("/api/Orders",
+                new StringContent(JsonConvert.SerializeObject(1), Encoding.UTF8, "application/json"));
+            Assert.IsTrue(HttpStatusCode.Created == response.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task Post_Order_ShouldReturnCreatedOrder()
+        {
+            var client = _factory.CreateClient();
+            var response = await client.PostAsync("/api/Orders",
+                new StringContent(JsonConvert.SerializeObject(1), Encoding.UTF8, "application/json"));
+            Assert.IsTrue(HttpStatusCode.Created == response.StatusCode);
+            var result = await response.Content.ReadAsStringAsync();
+            var order = JsonConvert.DeserializeObject<OrderDTO>(result);
+            Assert.IsNotNull(order);
+            Assert.AreEqual(order.OrderStatus, OrderStatus.InProgress);
         }
 
         private void OrderAsserts(OrderDTO order)

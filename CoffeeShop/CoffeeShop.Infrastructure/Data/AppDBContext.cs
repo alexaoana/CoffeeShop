@@ -10,6 +10,7 @@ namespace CoffeeShop.Infrastructure.Data
         {
 
         }
+
         public AppDbContext(DbContextOptions<AppDbContext> dbContextOptions) : base(dbContextOptions)
         {
 

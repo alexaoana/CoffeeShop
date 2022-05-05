@@ -8,7 +8,8 @@ namespace CoffeeShop.Core.AutoMapperProfiles
     {
         public ProductProfile()
         {
-            CreateMap<Product, ProductDTO>();
+            CreateMap<Product, ProductDTO>()
+                .ForMember(dest => dest.ImageAzurePath, opt => opt.MapFrom(src => src.Image.AzurePath));
             CreateMap<ProductDTO, Product>();
         }
     }

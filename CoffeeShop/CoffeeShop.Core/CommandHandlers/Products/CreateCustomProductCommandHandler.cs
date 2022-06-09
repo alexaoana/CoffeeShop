@@ -44,6 +44,8 @@ namespace CoffeeShop.Core.CommandHandlers.Products
                     case Ingredient.Ice:
                         product = new CoffeeWithIce(product).GetProduct();
                         break;
+                    default:
+                        break;
                 }
             return _mapper.Map<ProductOrder, ProductOrderDTO>(product);
         }

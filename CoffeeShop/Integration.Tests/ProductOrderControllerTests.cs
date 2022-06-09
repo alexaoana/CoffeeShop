@@ -34,18 +34,44 @@ namespace Integration.Tests
             var response = await client.GetAsync("api/ProductOrders/1");
             var result = await response.Content.ReadAsStringAsync();
             var productOrder = JsonConvert.DeserializeObject<ProductOrderDTO>(result);
-            ProductOrderAsserts(productOrder);
+            var newProductOrder = new ProductOrderDTO
+            {
+                Quantity = 3,
+                Price = 5.5,
+                Description = "Cafea simpla",
+                Name = "Espresso",
+                CoffeeIntensity = 5,
+                Amount = 50,
+                Ingredients = new List<Ingredient>(),
+                OrderId = 1,
+                ProductId = 1
+            };
+            Assert.AreEqual(JsonConvert.SerializeObject(newProductOrder), JsonConvert.SerializeObject(productOrder));
         }
 
         [TestMethod]
         public async Task Post_ProductOrder_ShouldReturnCreatedResponse()
         {
+            var ingredients = new List<Ingredient>();
+            ingredients.Add(Ingredient.Milk);
+            ingredients.Add(Ingredient.NoCaffeine);
+            ingredients.Add(Ingredient.AlmondMilk);
+            ingredients.Add(Ingredient.Caffeine);
+            ingredients.Add(Ingredient.Ice);
+            ingredients.Add(Ingredient.Sugar);
+            ingredients.Add(Ingredient.CoconutMilk);
+            ingredients.Add(Ingredient.Cream);
             var productOrder = new ProductOrderDTO
             {
                 ProductId = 1,
                 OrderId = 1,
                 Quantity = 6,
-                Ingredients = new List<Ingredient>()
+                Ingredients = ingredients,
+                Name = "",
+                Description = "",
+                Amount = 0,
+                CoffeeIntensity = 0,
+                Price = 0
             };
             var client = _factory.CreateClient();
             var response = await client.PostAsync("/api/ProductOrders",
@@ -53,14 +79,12 @@ namespace Integration.Tests
             Assert.IsTrue(HttpStatusCode.Created == response.StatusCode);
         }
 
-        private static void ProductOrderAsserts(ProductOrderDTO productOrder)
+        [TestMethod]
+        public async Task Delete_ProductOrder_ShouldReturnOkStatus()
         {
-            Assert.AreEqual(productOrder.Quantity, 3);
-            Assert.AreEqual(productOrder.Price, 5.5);
-            Assert.AreEqual(productOrder.Description, "Cafea simpla");
-            Assert.AreEqual(productOrder.Name, "Espresso");
-            Assert.AreEqual(productOrder.CoffeeIntensity, 5);
-            Assert.AreEqual(productOrder.Amount, 50);
+            var client = _factory.CreateClient();
+            var response = await client.DeleteAsync("api/ProductOrders/1");
+            Assert.IsTrue(HttpStatusCode.OK == response.StatusCode);
         }
     }
 }

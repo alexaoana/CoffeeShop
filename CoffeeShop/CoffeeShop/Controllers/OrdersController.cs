@@ -43,15 +43,27 @@ namespace CoffeeShop.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> PayOrder([FromBody]int orderId)
+        [Route("{orderId}")]
+        public async Task<IActionResult> ModifyOrder(int orderId, [FromBody]int status)
         {
-            var result = await _mediator.Send(new PayOrderCommand
+            if (status == 1)
             {
-                OrderId = orderId,
-                Payment = new PayByCash()
-            });
-            return Ok(result);
+                var result = await _mediator.Send(new PayOrderCommand
+                {
+                    OrderId = orderId,
+                    Payment = new PayByCash()
+                });
+                return Ok(result);
+            }
+            if (status == 2)
+            {
+                var result = await _mediator.Send(new CancelOrderCommand
+                {
+                    OrderId = orderId
+                });
+                return Ok(result);
+            }
+            return BadRequest();
         }
-
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CoffeeShop.Core;
+using CoffeeShop.Core.Domain;
 using CoffeeShop.Core.DTOs;
 
 namespace CoffeeShop.Core.AutoMapperProfiles
@@ -9,8 +10,8 @@ namespace CoffeeShop.Core.AutoMapperProfiles
         public ProductProfile()
         {
             CreateMap<Product, ProductDTO>()
-                .ForMember(dest => dest.ImageAzurePath, opt => opt.MapFrom(src => src.Image.AzurePath));
-            CreateMap<ProductDTO, Product>();
+                .ForMember(dest => dest.AzurePath, opt => opt.MapFrom(src => src.Image.AzurePath));
+            CreateMap<ProductDTO, Product>(); ;
         }
     }
 }

@@ -42,7 +42,18 @@ namespace Integration.Tests
             var result = await response.Content.ReadAsStringAsync();
             var users = JsonConvert.DeserializeObject<List<UserDTO>>(result);
             var user = users.FirstOrDefault(x => x.FirstName.Equals("Ana"));
-            UserAsserts(user);
+            var newUser = new UserDTO
+            {
+                Id = 1,
+                FirstName = "Ana",
+                LastName = "Pop",
+                Email = "ana.pop@y.com",
+                Password = "ana",
+                AddressCity = "Cluj-Napoca",
+                AddressStreet = "Dorobantilor",
+                AddressNumber = "17A"
+            };
+            Assert.AreEqual(JsonConvert.SerializeObject(user), JsonConvert.SerializeObject(newUser));
         }
 
         [TestMethod]
@@ -52,7 +63,18 @@ namespace Integration.Tests
             var response = await client.GetAsync("api/Users/1");
             var result = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<UserDTO>(result);
-            UserAsserts(user);
+            var newUser = new UserDTO
+            {
+                Id = 1,
+                FirstName = "Ana",
+                LastName = "Pop",
+                Email = "ana.pop@y.com",
+                Password = "ana",
+                AddressCity = "Cluj-Napoca",
+                AddressStreet = "Dorobantilor",
+                AddressNumber = "17A"
+            };
+            Assert.AreEqual(JsonConvert.SerializeObject(user), JsonConvert.SerializeObject(newUser));
         }
 
         [TestMethod]
@@ -98,6 +120,7 @@ namespace Integration.Tests
         {
             var newUser = new UserDTO
             {
+                Id = 3,
                 FirstName = "Mihai",
                 LastName = "Popescu",
                 Email = "mihai.popescu@y.com",
@@ -112,27 +135,23 @@ namespace Integration.Tests
             var result = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<UserDTO>(result);
             Assert.IsNotNull(user);
-            Assert.AreEqual(newUser.FirstName, user.FirstName);
-            Assert.AreEqual(newUser.LastName, user.LastName);
-            Assert.AreEqual(newUser.Email, user.Email);
-            Assert.AreEqual(newUser.Password, user.Password);
-            Assert.AreEqual(newUser.AddressCity, user.AddressCity);
-            Assert.AreEqual(newUser.AddressStreet, user.AddressStreet);
-            Assert.AreEqual(newUser.AddressNumber, user.AddressNumber);
+            Assert.AreEqual(JsonConvert.SerializeObject(user), JsonConvert.SerializeObject(newUser));
+        }
+
+        [TestMethod]
+        public async Task Get_CurrentOrder_ShouldReturnExistingOrder()
+        {
+            var client = _factory.CreateClient();
+            var response = await client.GetAsync("api/Users/1/currentOrder");
+            var result = await response.Content.ReadAsStringAsync();
+            var order = JsonConvert.DeserializeObject<OrderDTO>(result);
+            Assert.AreNotEqual(order, null);
         }
 
         [ClassCleanup]
         public static void ClassCleanup()
         {
             _factory.Dispose();
-        }
-
-        private static void UserAsserts(UserDTO user)
-        {
-            Assert.AreEqual(user.FirstName, "Ana");
-            Assert.AreEqual(user.LastName, "Pop");
-            Assert.AreEqual(user.Email, "ana.pop@y.com");
-            Assert.AreEqual(user.Password, "ana");
         }
     }
 }

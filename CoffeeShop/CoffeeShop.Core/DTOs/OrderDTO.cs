@@ -5,6 +5,7 @@ namespace CoffeeShop.Core.DTOs
 {
     public class OrderDTO
     {
+        public int Id { get; set; }
         [JsonIgnore]
         public User User { get; set; }
         public OrderStatus OrderStatus { get; set; }

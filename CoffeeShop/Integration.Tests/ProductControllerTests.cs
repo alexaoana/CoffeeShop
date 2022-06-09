@@ -1,4 +1,5 @@
-﻿using CoffeeShop.Core.DTOs;
+﻿using CoffeeShop.Core.Domain;
+using CoffeeShop.Core.DTOs;
 using CoffeeShop.Core.Enums;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
@@ -42,7 +43,18 @@ namespace Integration.Tests
             var result = await response.Content.ReadAsStringAsync();
             var products = JsonConvert.DeserializeObject<List<ProductDTO>>(result);
             var product = products.FirstOrDefault(x => x.Name.Equals("Espresso"));
-            ProductAsserts(product);
+            var newProduct = new ProductDTO
+            {
+                Id = 1,
+                Name = "Espresso",
+                Amount = 50,
+                Description = "Cafea simpla",
+                ProductUnit = ProductUnit.Ml,
+                Price = 5.5,
+                CoffeeIntensity = 5,
+                AzurePath = "product"
+            };
+            Assert.AreEqual(JsonConvert.SerializeObject(product), JsonConvert.SerializeObject(newProduct));
         }
 
         [TestMethod]
@@ -52,7 +64,18 @@ namespace Integration.Tests
             var response = await client.GetAsync("api/Products/1");
             var result = await response.Content.ReadAsStringAsync();
             var product = JsonConvert.DeserializeObject<ProductDTO>(result);
-            ProductAsserts(product);
+            var newProduct = new ProductDTO
+            {
+                Id = 1,
+                Name = "Espresso",
+                Amount = 50,
+                Description = "Cafea simpla",
+                ProductUnit = ProductUnit.Ml,
+                Price = 5.5,
+                CoffeeIntensity = 5,
+                AzurePath = "product"
+            };
+            Assert.AreEqual(JsonConvert.SerializeObject(product), JsonConvert.SerializeObject(newProduct));
         }
 
         [TestMethod]
@@ -60,13 +83,14 @@ namespace Integration.Tests
         {
             var product = new ProductDTO
             {
+                Id = 2,
                 Name = "Cappucino",
                 Description = "Cafea cu lapte",
                 CoffeeIntensity = 6,
                 Price = 10,
                 Amount = 150,
                 ProductUnit = ProductUnit.Ml,
-                ImageAzurePath = ""
+                AzurePath = ""
             };
             var client = _factory.CreateClient();
             var response = await client.PostAsync("/api/Products",
@@ -79,35 +103,21 @@ namespace Integration.Tests
         {
             var newProduct = new ProductDTO
             {
+                Id = 3,
                 Name = "Cappucino",
                 Description = "Cafea cu lapte",
                 CoffeeIntensity = 6,
                 Price = 10,
                 Amount = 150,
                 ProductUnit = ProductUnit.Ml,
-                ImageAzurePath = "abcd"
+                AzurePath = "abcd",
             };
             var client = _factory.CreateClient();
             var response = await client.PostAsync("/api/Products",
                 new StringContent(JsonConvert.SerializeObject(newProduct), Encoding.UTF8, "application/json"));
             var result = await response.Content.ReadAsStringAsync();
             var product = JsonConvert.DeserializeObject<ProductDTO>(result);
-            Assert.AreEqual(newProduct.Name, product.Name);
-            Assert.AreEqual(newProduct.Description, product.Description);
-            Assert.AreEqual(newProduct.CoffeeIntensity, product.CoffeeIntensity);
-            Assert.AreEqual(newProduct.Price, product.Price);
-            Assert.AreEqual(newProduct.Amount, product.Amount);
-            Assert.AreEqual(newProduct.ProductUnit, product.ProductUnit);
-            Assert.AreEqual(newProduct.ImageAzurePath, product.ImageAzurePath);
-        }
-
-        private static void ProductAsserts(ProductDTO product)
-        {
-            Assert.AreEqual(product.Description, "Cafea simpla");
-            Assert.AreEqual(product.Price, 5.5);
-            Assert.AreEqual(product.Amount, 50);
-            Assert.AreEqual(product.ProductUnit, ProductUnit.Ml);
-            Assert.AreEqual(product.CoffeeIntensity, 5);
+            Assert.AreEqual(JsonConvert.SerializeObject(product), JsonConvert.SerializeObject(newProduct));
         }
     }
 }

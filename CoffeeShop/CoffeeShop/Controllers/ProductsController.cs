@@ -41,7 +41,7 @@ namespace CoffeeShop.Controllers
                 Price = productDTO.Price,
                 Amount = productDTO.Amount,
                 ProductUnit = productDTO.ProductUnit,
-                Image = new Image(productDTO.ImageAzurePath)
+                Image = new Image(productDTO.AzurePath)
             });
             
             return CreatedAtAction(nameof(GetProductById), new { id = _mapper.Map<ProductDTO, Product>(product).Id }, product);

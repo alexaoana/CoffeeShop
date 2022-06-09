@@ -45,5 +45,13 @@ namespace CoffeeShop.Controllers
             });
             return CreatedAtAction(nameof(GetProductOrderById), new { Id = _mapper.Map<ProductOrderDTO, ProductOrder>(productOrder).Id }, productOrder);
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> DeleteProductOrder(int id)
+        {
+            var productOrder = await _mediator.Send(new DeleteProductOrderCommand { ProductOrderId = id});
+            return Ok(productOrder);
+        }
     }
 }

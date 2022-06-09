@@ -31,7 +31,12 @@ namespace Integration.Tests
             var response = await client.GetAsync("api/Orders/1");
             var result = await response.Content.ReadAsStringAsync();
             var order = JsonConvert.DeserializeObject<OrderDTO>(result);
-            OrderAsserts(order);
+            var newOrder = new OrderDTO
+            {
+                Id = 1,
+                OrderStatus = OrderStatus.InProgress
+            };
+            Assert.AreEqual(JsonConvert.SerializeObject(newOrder), JsonConvert.SerializeObject(order));
         }
 
         [TestMethod]
@@ -56,10 +61,15 @@ namespace Integration.Tests
             Assert.AreEqual(order.OrderStatus, OrderStatus.InProgress);
         }
 
-        private void OrderAsserts(OrderDTO order)
+        [TestMethod]
+        public async Task Pay_Order_ShouldReturnOKResponse()
         {
-            Assert.AreEqual(order.OrderStatus, OrderStatus.InProgress);
-            Assert.AreEqual(order.User.Id, 1);
+            var client = _factory.CreateClient();
+            var response = await client.PutAsync("api/Orders", 
+                new StringContent(JsonConvert.SerializeObject(1), Encoding.UTF8, "application/json"));
+            var result = await response.Content.ReadAsStringAsync();
+            var order = JsonConvert.DeserializeObject<OrderDTO>(result);
+            Assert.AreEqual(order.OrderStatus, OrderStatus.Placed);
         }
     }
 }

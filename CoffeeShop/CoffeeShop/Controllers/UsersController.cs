@@ -63,5 +63,25 @@ namespace CoffeeShop.Controllers
                 return NotFound();
             return Ok(orders);
         }
+
+        [HttpGet]
+        [Route("{id}/currentOrder")]
+        public async Task<IActionResult> GetCurrentOrderOfUser(int id)
+        {
+            var order = await _mediator.Send(new GetCurrentOrderOfUserCommand { UserId = id });
+            if (order == null)
+                return NotFound();
+            return Ok(order);
+        }
+
+        [HttpGet]
+        [Route("email/{email}")]
+        public async Task<IActionResult> GetUserByEmail(string email)
+        {
+            var user = await _mediator.Send(new GetUserByEmailQuery { Email = email });
+            if (user == null)
+                return NotFound();
+            return Ok(user);
+        }
     }
 }
